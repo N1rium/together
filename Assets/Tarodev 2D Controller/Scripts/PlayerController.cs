@@ -9,7 +9,7 @@ using UnityEngine;
 namespace TarodevController
 {
     [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D), typeof(CapsuleCollider2D))]
-    public class PlayerController : MonoBehaviour, IPlayerController, IPhysicsObject
+    public partial class PlayerController : MonoBehaviour, IPlayerController, IPhysicsObject
     {
         #region References
 
@@ -347,6 +347,8 @@ namespace TarodevController
                     break;
                 case ColliderMode.Airborne:
                     break;
+                case ColliderMode.Swimming:
+                    break;
             }
         }
 
@@ -354,7 +356,8 @@ namespace TarodevController
         {
             Standard,
             Crouching,
-            Airborne
+            Airborne,
+            Swimming
         }
 
         #endregion
@@ -457,225 +460,7 @@ namespace TarodevController
         }
 
         #endregion
-
-        #region Ladders
-
-        private bool CanEnterLadder => _ladderHit && _time > _timeLeftLadder + Stats.LadderCooldownTime;
-        private bool ShouldMountLadder => Stats.AutoAttachToLadders || _frameInput.Move.y > Stats.VerticalDeadZoneThreshold || (!_grounded && _frameInput.Move.y < -Stats.VerticalDeadZoneThreshold);
-        private bool ShouldDismountLadder => !Stats.AutoAttachToLadders && _grounded && _frameInput.Move.y < -Stats.VerticalDeadZoneThreshold;
-
-        private float _timeLeftLadder;
-        private Collider2D _ladderHit;
-        private float _ladderSnapVel;
-
-        private void CalculateLadders()
-        {
-            if (!Stats.AllowLadders) return;
-
-            Physics2D.queriesHitTriggers = true; // Ladders are set to Trigger
-            _ladderHit = Physics2D.OverlapBox(_framePosition + (Vector2)_wallDetectionBounds.center, _wallDetectionBounds.size, 0, Stats.LadderLayer);
-
-            Physics2D.queriesHitTriggers = _cachedQueryTriggers;
-
-            if (!ClimbingLadder && CanEnterLadder && ShouldMountLadder) ToggleClimbingLadder(true);
-            else if (ClimbingLadder && (!_ladderHit || ShouldDismountLadder)) ToggleClimbingLadder(false);
-        }
-
-        private void ToggleClimbingLadder(bool on)
-        {
-            if (ClimbingLadder == on) return;
-            if (on)
-            {
-                SetVelocity(Vector2.zero);
-                _rb.gravityScale = 0;
-                _ladderSnapVel = 0; // reset damping velocity for consistency
-            }
-            else
-            {
-                if (_ladderHit) _timeLeftLadder = _time; // to prevent immediately re-mounting ladder
-                if (_frameInput.Move.y > 0)
-                {
-                    AddFrameForce(new Vector2(0, Stats.LadderPopForce));
-                }
-
-                _rb.gravityScale = GRAVITY_SCALE;
-            }
-
-            ClimbingLadder = on;
-            ResetAirJumps();
-        }
-
-        #endregion
-
-        #region Jump
-
-        private const float JUMP_CLEARANCE_TIME = 0.25f;
-        private bool IsWithinJumpClearance => _lastJumpExecutedTime + JUMP_CLEARANCE_TIME > _time;
-        private float _lastJumpExecutedTime;
-        private bool _bufferedJumpUsable;
-        private bool _jumpToConsume;
-        private float _timeJumpWasPressed;
-        private Vector2 _forceToApplyThisFrame;
-        private bool _endedJumpEarly;
-        private float _endedJumpForce;
-        private int _airJumpsRemaining;
-        private bool _wallJumpCoyoteUsable;
-        private bool _coyoteUsable;
-        private float _timeLeftGrounded;
-        private float _returnWallInputLossAfter;
-
-        private bool HasBufferedJump => _bufferedJumpUsable && _time < _timeJumpWasPressed + Stats.BufferedJumpTime && !IsWithinJumpClearance;
-        private bool CanUseCoyote => _coyoteUsable && !_grounded && _time < _timeLeftGrounded + Stats.CoyoteTime;
-        private bool CanAirJump => !_grounded && _airJumpsRemaining > 0;
-        private bool CanWallJump => !_grounded && (_isOnWall || _wallDirThisFrame != 0) || (_wallJumpCoyoteUsable && _time < _timeLeftWall + Stats.WallCoyoteTime);
-
-        private void CalculateJump()
-        {
-            if ((_jumpToConsume || HasBufferedJump) && CanStand)
-            {
-                if (CanWallJump) ExecuteJump(JumpType.WallJump);
-                else if (_grounded || ClimbingLadder) ExecuteJump(JumpType.Jump);
-                else if (CanUseCoyote) ExecuteJump(JumpType.Coyote);
-                else if (CanAirJump) ExecuteJump(JumpType.AirJump);
-            }
-
-            if ((!_endedJumpEarly && !_grounded && !_frameInput.JumpHeld && Velocity.y > 0) || Velocity.y < 0) _endedJumpEarly = true; // Early end detection
-
-
-            if (_time > _returnWallInputLossAfter) _wallJumpInputNerfPoint = Mathf.MoveTowards(_wallJumpInputNerfPoint, 1, _delta / Stats.WallJumpInputLossReturnTime);
-        }
-
-        private void ExecuteJump(JumpType jumpType)
-        {
-            SetVelocity(_trimmedFrameVelocity);
-            _endedJumpEarly = false;
-            _bufferedJumpUsable = false;
-            _lastJumpExecutedTime = _time;
-            _currentStepDownLength = 0;
-            if (ClimbingLadder) ToggleClimbingLadder(false);
-
-            if (jumpType is JumpType.Jump or JumpType.Coyote)
-            {
-                _coyoteUsable = false;
-                AddFrameForce(new Vector2(0, Stats.JumpPower));
-            }
-            else if (jumpType is JumpType.AirJump)
-            {
-                _airJumpsRemaining--;
-                AddFrameForce(new Vector2(0, Stats.JumpPower));
-            }
-            else if (jumpType is JumpType.WallJump)
-            {
-                ToggleOnWall(false);
-
-                _wallJumpCoyoteUsable = false;
-                _wallJumpInputNerfPoint = 0;
-                _returnWallInputLossAfter = _time + Stats.WallJumpTotalInputLossTime;
-                _wallDirectionForJump = _wallDirThisFrame;
-                if (_isOnWall || IsPushingAgainstWall)
-                {
-                    Debug.Log("WallJumpPower");
-                    AddFrameForce(new Vector2(-_wallDirThisFrame, 1) * Stats.WallJumpPower);
-                }
-                else
-                {
-                    Debug.Log("WallPushPower");
-                    AddFrameForce(new Vector2(-_wallDirThisFrame, 1) * Stats.WallPushPower);
-                }
-            }
-
-            Jumped?.Invoke(jumpType);
-        }
-
-        private void ResetAirJumps() => _airJumpsRemaining = Stats.MaxAirJumps;
-
-        #endregion
-
-        #region Dash
-
-        private bool _dashToConsume;
-        private bool _canDash;
-        private Vector2 _dashVel;
-        private bool _dashing;
-        private float _startedDashing;
-        private float _nextDashTime;
-
-        private void CalculateDash()
-        {
-            if (!Stats.AllowDash) return;
-
-            if (_dashToConsume && _canDash && !Crouching && _time > _nextDashTime)
-            {
-                var dir = new Vector2(_frameInput.Move.x, Mathf.Max(_frameInput.Move.y, 0f)).normalized;
-                if (dir == Vector2.zero) return;
-
-                _dashVel = dir * Stats.DashVelocity;
-                _dashing = true;
-                _canDash = false;
-                _startedDashing = _time;
-                _nextDashTime = _time + Stats.DashCooldown;
-                DashChanged?.Invoke(true, dir);
-            }
-
-            if (_dashing)
-            {
-                if (_time > _startedDashing + Stats.DashDuration)
-                {
-                    _dashing = false;
-                    DashChanged?.Invoke(false, Vector2.zero);
-
-                    SetVelocity(new Vector2(Velocity.x * Stats.DashEndHorizontalMultiplier, Velocity.y));
-                    if (_grounded) _canDash = true;
-                }
-            }
-        }
-
-        #endregion
-
-        #region Crouching
-
-        private float _timeStartedCrouching;
-        private bool CrouchPressed => _frameInput.Move.y < -Stats.VerticalDeadZoneThreshold;
-
-        private bool CanStand => IsStandingPosClear(_rb.position + _character.StandingColliderCenter);
-        private bool IsStandingPosClear(Vector2 pos) => CheckPos(pos, _character.StandingColliderSize - SKIN_WIDTH * Vector2.one);
-
-        // We handle crouch AFTER frame movements are done to avoid transient velocity issues
-        private void CalculateCrouch()
-        {
-            if (!Stats.AllowCrouching) return;
-
-            if (!Crouching && CrouchPressed && _grounded) ToggleCrouching(true);
-            else if (Crouching && (!CrouchPressed || !_grounded)) ToggleCrouching(false);
-        }
-
-        private void ToggleCrouching(bool shouldCrouch)
-        {
-            if (shouldCrouch)
-            {
-                _timeStartedCrouching = _time;
-                Crouching = true;
-            }
-            else
-            {
-                if (!CanStand) return;
-                Crouching = false;
-            }
-
-            SetColliderMode(Crouching ? ColliderMode.Crouching : ColliderMode.Standard);
-        }
-
-        private bool CheckPos(Vector2 pos, Vector2 size)
-        {
-            Physics2D.queriesHitTriggers = false;
-            var hit = Physics2D.OverlapBox(pos, size, 0, Stats.CollisionLayers);
-            //var hit = Physics2D.OverlapCapsule(pos, size - new Vector2(SKIN_WIDTH, 0), _collider.direction, 0, ~Stats.PlayerLayer);
-            Physics2D.queriesHitTriggers = _cachedQueryMode;
-            return !hit;
-        }
-
-        #endregion
-
+        
         #region Move
 
         private Vector2 _frameTransientVelocity;
@@ -871,16 +656,6 @@ namespace TarodevController
 
         #endregion
         
-        #region Swim
-
-        private void CalculateSwimming()
-        {
-            if (!Stats.AllowSwimming) return;
-        }
-        
-        #endregion
-
-
         private void SaveCharacterState()
         {
             State = new ControllerState

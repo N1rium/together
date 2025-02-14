@@ -80,8 +80,9 @@ namespace TarodevController
         public float ExternalVelocityDecayRate = 0.1f;
         
         // Swimming
-        [Header("Swimming"), Space] public LayerMask WaterLayer;
+        [Header("Swimming"), Space] 
         public bool AllowSwimming;
+        public LayerMask WaterLayer;
         public float SwimSpeed = 4;
 
         private void OnValidate()
