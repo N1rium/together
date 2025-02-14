@@ -119,7 +119,6 @@ namespace TarodevController
             CalculateLadders();
             CalculateJump();
             CalculateDash();
-            CalculateSwimming();
 
             CalculateExternalModifiers();
 
@@ -262,6 +261,7 @@ namespace TarodevController
 
         private void CalculateCollisions()
         {
+            if (_isSwimming) return;
             Physics2D.queriesStartInColliders = false;
 
             // Is the middle ray good?
@@ -536,6 +536,15 @@ namespace TarodevController
                 // Required for reliable slope jumps
                 return;
             }
+            
+            if (_isSwimming)
+            {
+                _constantForce.force = Vector2.zero;
+                var goalVelocity = _frameInput.Move * 4f;
+                var vel = Vector2.Lerp(Velocity, goalVelocity, 10f * _delta);
+                SetVelocity(vel);
+                return;
+            }
 
             if (_dashing)
             {
@@ -656,6 +665,36 @@ namespace TarodevController
 
         #endregion
         
+        #region Swim
+        
+        [SerializeField] private ColliderWrapper _swimColliderWrapper;
+        private bool _isSwimming;
+
+        private void OnWaterEnter(Collider2D other)
+        {
+            _isSwimming = true;
+        }
+        
+        private void OnWaterLeave(Collider2D other)
+        {
+            _isSwimming = false;
+            AddFrameForce(_frameInput.Move * 10f);
+        }
+
+        private void OnEnable()
+        {
+            _swimColliderWrapper.OnTriggerEnter += OnWaterEnter;
+            _swimColliderWrapper.OnTriggerExit += OnWaterLeave;
+        }
+
+        private void OnDisable()
+        {
+            _swimColliderWrapper.OnTriggerEnter -= OnWaterEnter;
+            _swimColliderWrapper.OnTriggerExit -= OnWaterLeave;
+        }
+
+        #endregion
+        
         private void SaveCharacterState()
         {
             State = new ControllerState
@@ -678,6 +717,7 @@ namespace TarodevController
         {
             if (other.TryGetComponent(out ISpeedModifier modifier)) _modifiers.Add(modifier);
             else if (other.TryGetComponent(out IPhysicsMover mover) && !mover.RequireGrounding) _activatedMovers.Add(mover);
+            _isSwimming = (Stats.WaterLayer.value & (1 << other.gameObject.layer)) != 0;
         }
 
         private void OnTriggerExit2D(Collider2D other)

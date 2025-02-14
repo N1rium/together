@@ -14,6 +14,7 @@ namespace TarodevController
         private void CalculateDash()
         {
             if (!Stats.AllowDash) return;
+            if (_isSwimming) return;
 
             if (_dashToConsume && _canDash && !Crouching && _time > _nextDashTime)
             {

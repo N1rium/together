@@ -26,6 +26,7 @@ namespace TarodevController
 
         private void CalculateJump()
         {
+            if (_isSwimming) return;
             if ((_jumpToConsume || HasBufferedJump) && CanStand)
             {
                 if (CanWallJump) ExecuteJump(JumpType.WallJump);
