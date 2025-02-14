@@ -31,6 +31,7 @@ namespace TarodevController
         public event Action<bool> WallGrabChanged;
         public event Action<Vector2> Repositioned;
         public event Action<bool> ToggledPlayer;
+        public event Action<bool> SwimmingChanged;
 
         public bool Active { get; private set; } = true;
         public Vector2 Up { get; private set; }
@@ -673,12 +674,14 @@ namespace TarodevController
         private void OnWaterEnter(Collider2D other)
         {
             _isSwimming = true;
+            SwimmingChanged?.Invoke(true);
         }
         
         private void OnWaterLeave(Collider2D other)
         {
             _isSwimming = false;
             AddFrameForce(_frameInput.Move * 10f);
+            SwimmingChanged?.Invoke(false);
         }
 
         private void OnEnable()
@@ -790,6 +793,7 @@ namespace TarodevController
         public event Action<bool> WallGrabChanged;
         public event Action<Vector2> Repositioned;
         public event Action<bool> ToggledPlayer;
+        public event Action<bool> SwimmingChanged;
 
         public bool Active { get; }
         public Vector2 Up { get; }

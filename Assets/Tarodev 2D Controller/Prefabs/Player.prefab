@@ -19725,6 +19725,7 @@ MonoBehaviour:
   _doubleJumpParticles: {fileID: 3054942119778330331}
   _dashParticles: {fileID: 3054942120786680124}
   _dashRingParticles: {fileID: 3054942120025842297}
+  _swimParticles: {fileID: 0}
   _dashRingTransform: {fileID: 3054942120045712701}
   _doubleJumpClip: {fileID: 8300000, guid: 0d11fd7368b306b4c900241e3dadf28f, type: 3}
   _dashClip: {fileID: 8300000, guid: 6d2d16f85c087ea419d323141cd2145c, type: 3}
@@ -19744,6 +19745,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a42ad5ad97b59d042bb11c6713a26100, type: 3}
   _wallGrabClip: {fileID: 8300000, guid: 9c4b2bf8e30a90a4a95c5285a6e8e6f7, type: 3}
   _runClip: {fileID: 0}
+  _waterEnter: {fileID: 0}
+  _waterExit: {fileID: 0}
   _squishMinMaxX:
     m_Mode: 2
     m_CurveMultiplier: 1

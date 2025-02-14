@@ -27608,6 +27608,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3388342872686156354, guid: 3ed9e6021c406334f96cf8c57c4b1c0b, type: 3}
+      propertyPath: _waterExit
+      value: 
+      objectReference: {fileID: 8300000, guid: a9224e43cf39f5941ab08c495772b33e, type: 3}
+    - target: {fileID: 3388342872686156354, guid: 3ed9e6021c406334f96cf8c57c4b1c0b, type: 3}
+      propertyPath: _waterEnter
+      value: 
+      objectReference: {fileID: 8300000, guid: f652e6dbbe0cb35499968c39b3901387, type: 3}
+    - target: {fileID: 3388342872686156354, guid: 3ed9e6021c406334f96cf8c57c4b1c0b, type: 3}
+      propertyPath: _swimParticles
+      value: 
+      objectReference: {fileID: 1513141938}
     - target: {fileID: 6321054777526310273, guid: 3ed9e6021c406334f96cf8c57c4b1c0b, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
       value: 951
@@ -33538,8 +33550,8 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 1
-  playOnAwake: 1
+  prewarm: 0
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
