@@ -19,6 +19,7 @@ namespace Networking
     {
         [SerializeField] private Image _playerSprite;
         [SerializeField] private TMP_InputField _nameInput;
+        [SerializeField] private TMP_Text _joinCodeText;
         
         private NetworkManager _networkManager;
 
@@ -26,6 +27,7 @@ namespace Networking
         public string PlayerName = "Player";
         public Color[] Colors;
         public int ColorIndex;
+        public Color Color;
     
         void Awake()
         {
@@ -59,7 +61,8 @@ namespace Networking
 
         public void NextColor()
         {
-            _playerSprite.color = Colors[++ColorIndex % Colors.Length];
+            Color = Colors[++ColorIndex % Colors.Length];
+            _playerSprite.color = Color;
             _playerSprite.transform.DOPunchScale(Vector3.one * 0.25f, 0.15f).OnComplete(() =>
             {
                 _playerSprite.transform.localScale = Vector3.one;
@@ -95,11 +98,11 @@ namespace Networking
             _networkManager.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
             var joinCode = await RelayService.Instance.GetJoinCodeAsync(hostAllocation.AllocationId);
 
-            var colorString = Colors[ColorIndex % Colors.Length].ToString();
+            /*var colorString = Colors[ColorIndex % Colors.Length].ToString();
             var rgba = colorString.Substring(5, colorString.Length - 6).Split(", ");
 
             var connectionData = $"{PlayerName}:{rgba[0]}:{rgba[1]}:{rgba[2]}";
-            _networkManager.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(connectionData);
+            _networkManager.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(connectionData);*/
             return _networkManager.StartHost() ? joinCode : null;
         }
 
@@ -131,6 +134,7 @@ namespace Networking
         public async void Create()
         {
             var code = await StartHostWithRelay();
+            _joinCodeText.text = code;
             await Api.Post<CodeDto>($"/matchmaking/code/{code}", null);
         }
 

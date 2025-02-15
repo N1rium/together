@@ -1,4 +1,4 @@
-using System;
+using Networking;
 using TarodevController;
 using TMPro;
 using Unity.Cinemachine;
@@ -16,20 +16,13 @@ public class NetworkPlayer : NetworkBehaviour
     [SerializeField] private PlayerController playerController;
     
     public NetworkVariable<FixedString32Bytes> Nickname = new(writePerm: NetworkVariableWritePermission.Owner);
-    public NetworkVariable<FixedString32Bytes> ColorString = new(writePerm: NetworkVariableWritePermission.Owner);
-
-    /*private void Awake()
-    {
-        playerInput.enabled = false;
-        playerController.enabled = false;
-        vcam.enabled = false;
-    }*/
+    public NetworkVariable<Color> Color = new(writePerm: NetworkVariableWritePermission.Owner);
 
     public override void OnNetworkSpawn()
     {
         // Subscribe to changes in the Nickname variable
         Nickname.OnValueChanged += OnNicknameChanged;
-        ColorString.OnValueChanged += OnColorChanged;
+        Color.OnValueChanged += OnColorChanged;
         
         playerInput.enabled = IsOwner;
         playerController.enabled = IsOwner;
@@ -39,13 +32,10 @@ public class NetworkPlayer : NetworkBehaviour
         {
             vcam.transform.SetParent(null);
             DontDestroyOnLoad(vcam.gameObject);
-                
-            var data = System.Text.Encoding.Default.GetString(NetworkManager.NetworkConfig.ConnectionData);
-            var split = data.Split(":");
-            Nickname.Value = split[0];
 
-            // R:G:B
-            ColorString.Value = $"{split[1]}:{split[2]}:{split[3]}";
+            var manager = GameObject.Find("NetworkManager").GetComponent<MultiplayerManager>();
+            Nickname.Value = manager.PlayerName;
+            Color.Value = manager.Color;
         }
         
         // Ensure nickname is updated initially when the object spawns
@@ -57,11 +47,9 @@ public class NetworkPlayer : NetworkBehaviour
         UpdateNicknameText(curr.Value);
     }
     
-    private void OnColorChanged(FixedString32Bytes prev, FixedString32Bytes curr)
+    private void OnColorChanged(Color prev, Color curr)
     {
-        var rgba = curr.Value.Split(":");
-        var color = new Color(float.Parse(rgba[0]), float.Parse(rgba[1]), float.Parse(rgba[2]), 1f);
-        spriteRenderer.color = color;
+        spriteRenderer.color = curr;
     }
     
     private void UpdateNicknameText(string value)

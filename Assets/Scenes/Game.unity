@@ -27392,6 +27392,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NetworkPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 140132916218502597, guid: 3ed9e6021c406334f96cf8c57c4b1c0b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1484832517897527587, guid: 3ed9e6021c406334f96cf8c57c4b1c0b, type: 3}
       propertyPath: BoundingShape2D
       value: 
@@ -33680,10 +33684,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.15
     y: 0
-    width: 1
-    height: 1
+    width: 0.33981484
+    height: 0.3398148
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
