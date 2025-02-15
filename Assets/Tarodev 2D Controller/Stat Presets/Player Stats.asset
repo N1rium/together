@@ -75,3 +75,9 @@ MonoBehaviour:
   LadderShimmySpeedMultiplier: 0.1
   NegativeYVelocityNegation: 0.2
   ExternalVelocityDecayRate: 0.5
+  AllowSwimming: 1
+  WaterLayer:
+    serializedVersion: 2
+    m_Bits: 16
+  SwimSpeed: 4
+  SwimDamping: 10

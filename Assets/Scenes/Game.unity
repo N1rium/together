@@ -27549,6 +27549,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1066582894176371284, guid: 3ed9e6021c406334f96cf8c57c4b1c0b, type: 3}
+      propertyPath: _drawGizmos
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066582894176371284, guid: 3ed9e6021c406334f96cf8c57c4b1c0b, type: 3}
       propertyPath: _swimColliderWrapper
       value: 
       objectReference: {fileID: 940429510}

@@ -116,6 +116,7 @@ namespace TarodevController
             CalculateCollisions();
             CalculateDirection();
 
+            CalculateSwim();
             CalculateWalls();
             CalculateLadders();
             CalculateJump();
@@ -262,6 +263,8 @@ namespace TarodevController
 
         private void CalculateCollisions()
         {
+            // This method seems to only perform checks if grounded NOT walls etc so can return here
+            // to prevent crouching in water
             if (_isSwimming) return;
             Physics2D.queriesStartInColliders = false;
 
@@ -541,8 +544,8 @@ namespace TarodevController
             if (_isSwimming)
             {
                 _constantForce.force = Vector2.zero;
-                var goalVelocity = _frameInput.Move * 4f;
-                var vel = Vector2.Lerp(Velocity, goalVelocity, 10f * _delta);
+                var goalVelocity = _frameInput.Move * Stats.SwimSpeed;
+                var vel = Vector2.Lerp(Velocity, goalVelocity, Stats.SwimDamping * _delta);
                 SetVelocity(vel);
                 return;
             }
@@ -666,38 +669,6 @@ namespace TarodevController
 
         #endregion
         
-        #region Swim
-        
-        [SerializeField] private ColliderWrapper _swimColliderWrapper;
-        private bool _isSwimming;
-
-        private void OnWaterEnter(Collider2D other)
-        {
-            _isSwimming = true;
-            SwimmingChanged?.Invoke(true);
-        }
-        
-        private void OnWaterLeave(Collider2D other)
-        {
-            _isSwimming = false;
-            AddFrameForce(_frameInput.Move * 10f);
-            SwimmingChanged?.Invoke(false);
-        }
-
-        private void OnEnable()
-        {
-            _swimColliderWrapper.OnTriggerEnter += OnWaterEnter;
-            _swimColliderWrapper.OnTriggerExit += OnWaterLeave;
-        }
-
-        private void OnDisable()
-        {
-            _swimColliderWrapper.OnTriggerEnter -= OnWaterEnter;
-            _swimColliderWrapper.OnTriggerExit -= OnWaterLeave;
-        }
-
-        #endregion
-        
         private void SaveCharacterState()
         {
             State = new ControllerState
@@ -720,7 +691,6 @@ namespace TarodevController
         {
             if (other.TryGetComponent(out ISpeedModifier modifier)) _modifiers.Add(modifier);
             else if (other.TryGetComponent(out IPhysicsMover mover) && !mover.RequireGrounding) _activatedMovers.Add(mover);
-            _isSwimming = (Stats.WaterLayer.value & (1 << other.gameObject.layer)) != 0;
         }
 
         private void OnTriggerExit2D(Collider2D other)
@@ -754,6 +724,8 @@ namespace TarodevController
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(pos + Vector2.up * _character.Height / 2, new Vector3(_character.Width, _character.Height));
             Gizmos.color = Color.magenta;
+            
+            Gizmos.DrawCube(pos + Vector2.up * 0.75f, Vector2.one * 0.5f);
 
             var rayStart = pos + Vector2.up * _character.StepHeight;
             var rayDir = Vector3.down * _character.StepHeight;

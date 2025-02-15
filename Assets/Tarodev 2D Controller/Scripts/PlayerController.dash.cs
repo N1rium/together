@@ -13,8 +13,7 @@ namespace TarodevController
 
         private void CalculateDash()
         {
-            if (!Stats.AllowDash) return;
-            if (_isSwimming) return;
+            if (!Stats.AllowDash || _isSwimming) return;
 
             if (_dashToConsume && _canDash && !Crouching && _time > _nextDashTime)
             {
@@ -29,17 +28,14 @@ namespace TarodevController
                 DashChanged?.Invoke(true, dir);
             }
 
-            if (_dashing)
-            {
-                if (_time > _startedDashing + Stats.DashDuration)
-                {
-                    _dashing = false;
-                    DashChanged?.Invoke(false, Vector2.zero);
+            if (!_dashing) return;
+            if (!(_time > _startedDashing + Stats.DashDuration)) return;
+            
+            _dashing = false;
+            DashChanged?.Invoke(false, Vector2.zero);
 
-                    SetVelocity(new Vector2(Velocity.x * Stats.DashEndHorizontalMultiplier, Velocity.y));
-                    if (_grounded) _canDash = true;
-                }
-            }
+            SetVelocity(new Vector2(Velocity.x * Stats.DashEndHorizontalMultiplier, Velocity.y));
+            if (_grounded) _canDash = true;
         }
     }
 }
