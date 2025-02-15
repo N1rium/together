@@ -27562,7 +27562,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 7da9a0ba9bf66f84f8f7b21070b5fd5c, type: 2}
     - target: {fileID: 1484832517897527587, guid: 3ed9e6021c406334f96cf8c57c4b1c0b, type: 3}
       propertyPath: Damping
-      value: 0.333
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1484832517897527587, guid: 3ed9e6021c406334f96cf8c57c4b1c0b, type: 3}
       propertyPath: BoundingShape2D
