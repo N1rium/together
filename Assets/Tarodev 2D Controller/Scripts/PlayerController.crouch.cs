@@ -6,7 +6,6 @@ namespace TarodevController
     {
         private float _timeStartedCrouching;
         private bool CrouchPressed => _frameInput.Move.y < -Stats.VerticalDeadZoneThreshold;
-
         private bool CanStand => IsStandingPosClear(_rb.position + _character.StandingColliderCenter);
         private bool IsStandingPosClear(Vector2 pos) => CheckPos(pos, _character.StandingColliderSize - SKIN_WIDTH * Vector2.one);
 

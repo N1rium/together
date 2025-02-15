@@ -22,6 +22,7 @@ namespace TarodevController
         [SerializeField] private ParticleSystem _doubleJumpParticles;
         [SerializeField] private ParticleSystem _dashParticles;
         [SerializeField] private ParticleSystem _dashRingParticles;
+        [SerializeField] private ParticleSystem _swimParticles;
         [SerializeField] private Transform _dashRingTransform;
 
         [Header("Audio Clips")] [SerializeField]
@@ -33,7 +34,8 @@ namespace TarodevController
         [SerializeField] private AudioClip[] _slideClips;
         [SerializeField] private AudioClip _wallGrabClip;
         [SerializeField] private AudioClip _runClip;
-        
+        [SerializeField] private AudioClip _waterEnter;
+        [SerializeField] private AudioClip _waterExit;
 
         private AudioSource _source;
         private IPlayerController _player;
@@ -60,6 +62,7 @@ namespace TarodevController
             _player.WallGrabChanged += OnWallGrabChanged;
             _player.Repositioned += PlayerOnRepositioned;
             _player.ToggledPlayer += PlayerOnToggledPlayer;
+            _player.SwimmingChanged += OnSwimmingChanged;
 
             _moveParticles.Play();
         }
@@ -72,6 +75,7 @@ namespace TarodevController
             _player.WallGrabChanged -= OnWallGrabChanged;
             _player.Repositioned -= PlayerOnRepositioned;
             _player.ToggledPlayer -= PlayerOnToggledPlayer;
+            _player.SwimmingChanged -= OnSwimmingChanged;
 
             _moveParticles.Stop();
         }
@@ -166,6 +170,19 @@ namespace TarodevController
         {
             _isOnWall = onWall;
             if(_isOnWall) PlaySound(_wallGrabClip, 0.5f);
+        }
+
+        private void OnSwimmingChanged(bool isSwimming)
+        {
+            if (isSwimming)
+            {
+                PlaySound(_waterEnter, 0.33f);
+                _swimParticles.Play();
+                return;
+            }
+            
+            PlaySound(_waterExit, 0.33f);
+            _swimParticles.Stop();
         }
 
         private void HandleWallSlideEffects()
@@ -442,6 +459,7 @@ namespace TarodevController
 
         private void PlaySound(AudioClip clip, float volume = 1, float pitch = 1)
         {
+            if (!clip) return;
             _source.pitch = pitch;
             _source.PlayOneShot(clip, volume);
         }

@@ -31,6 +31,7 @@ namespace TarodevController
         public event Action<bool> WallGrabChanged;
         public event Action<Vector2> Repositioned;
         public event Action<bool> ToggledPlayer;
+        public event Action<bool> SwimmingChanged;
 
         public bool Active { get; private set; } = true;
         public Vector2 Up { get; private set; }
@@ -115,11 +116,11 @@ namespace TarodevController
             CalculateCollisions();
             CalculateDirection();
 
+            CalculateSwim();
             CalculateWalls();
             CalculateLadders();
             CalculateJump();
             CalculateDash();
-            CalculateSwimming();
 
             CalculateExternalModifiers();
 
@@ -262,6 +263,9 @@ namespace TarodevController
 
         private void CalculateCollisions()
         {
+            // This method seems to only perform checks if grounded NOT walls etc so can return here
+            // to prevent crouching in water
+            if (_isSwimming) return;
             Physics2D.queriesStartInColliders = false;
 
             // Is the middle ray good?
@@ -536,6 +540,15 @@ namespace TarodevController
                 // Required for reliable slope jumps
                 return;
             }
+            
+            if (_isSwimming)
+            {
+                _constantForce.force = Vector2.zero;
+                var goalVelocity = _frameInput.Move * Stats.SwimSpeed;
+                var vel = Vector2.Lerp(Velocity, goalVelocity, Stats.SwimDamping * _delta);
+                SetVelocity(vel);
+                return;
+            }
 
             if (_dashing)
             {
@@ -711,6 +724,8 @@ namespace TarodevController
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(pos + Vector2.up * _character.Height / 2, new Vector3(_character.Width, _character.Height));
             Gizmos.color = Color.magenta;
+            
+            Gizmos.DrawCube(pos + Vector2.up * 0.75f, Vector2.one * 0.5f);
 
             var rayStart = pos + Vector2.up * _character.StepHeight;
             var rayDir = Vector3.down * _character.StepHeight;
@@ -750,6 +765,7 @@ namespace TarodevController
         public event Action<bool> WallGrabChanged;
         public event Action<Vector2> Repositioned;
         public event Action<bool> ToggledPlayer;
+        public event Action<bool> SwimmingChanged;
 
         public bool Active { get; }
         public Vector2 Up { get; }

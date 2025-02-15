@@ -83,7 +83,9 @@ namespace TarodevController
         [Header("Swimming"), Space] 
         public bool AllowSwimming;
         public LayerMask WaterLayer;
-        public float SwimSpeed = 4;
+        public float SwimSpeed = 4f;
+        public float SwimDamping = 10f;
+        public float SwimDashPower = 10f;
 
         private void OnValidate()
         {
