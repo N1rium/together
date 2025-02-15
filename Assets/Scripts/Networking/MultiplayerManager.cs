@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
@@ -44,6 +42,7 @@ namespace Networking
             _playerSprite.color = Colors[ColorIndex];
             _nameInput.text = PlayerName;
             _nameInput.onValueChanged.AddListener(OnNameChanged);
+            Color = Colors[ColorIndex % Colors.Length];
             
             DontDestroyOnLoad(NetworkManager.Singleton.gameObject);
             _networkManager.OnServerStarted += OnServerStarted;
