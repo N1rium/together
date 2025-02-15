@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DG.Tweening;
 using TMPro;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -59,6 +60,10 @@ namespace Networking
         public void NextColor()
         {
             _playerSprite.color = Colors[++ColorIndex % Colors.Length];
+            _playerSprite.transform.DOPunchScale(Vector3.one * 0.25f, 0.15f).OnComplete(() =>
+            {
+                _playerSprite.transform.localScale = Vector3.one;
+            });
         }
     
         private void OnServerStarted()
