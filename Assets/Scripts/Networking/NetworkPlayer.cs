@@ -40,6 +40,7 @@ public class NetworkPlayer : NetworkBehaviour
         
         // Ensure nickname is updated initially when the object spawns
         UpdateNicknameText(Nickname.Value.Value);
+        spriteRenderer.color = Color.Value;
     }
     
     private void OnNicknameChanged(FixedString32Bytes prev, FixedString32Bytes curr)

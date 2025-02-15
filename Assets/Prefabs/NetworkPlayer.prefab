@@ -272,7 +272,7 @@ MonoBehaviour:
         byte0027: 0
         byte0028: 0
         byte0029: 0
-  ColorString:
+  Color:
     m_InternalValue: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &3688991754759325103
 MonoBehaviour:
