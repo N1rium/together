@@ -10,7 +10,9 @@ namespace TarodevController
         private void CalculateSwim()
         {
             if (!Stats.AllowSwimming || !_isSwimming) return;
-            if (_frameInput.JumpDown)
+            
+            // TODO - Custom management for Swim dashing
+            if (_jumpToConsume)
             {
                 AddFrameForce(_frameInput.Move * Stats.SwimDashPower);
             }
