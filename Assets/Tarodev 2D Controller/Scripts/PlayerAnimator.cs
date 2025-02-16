@@ -50,7 +50,6 @@ namespace TarodevController
         {
             _source = GetComponent<AudioSource>();
             _player = GetComponentInParent<IPlayerController>();
-            Debug.Log("Setting PlayerActions to PlayerAnimator");
             SetPlayerActions(_player);
             _character = _playerActions.GeneratedCharacterSize();
             _defaultSpriteSize = new Vector2(1, _character.Height);
@@ -345,7 +344,6 @@ namespace TarodevController
 
         private void OnJumped(JumpType type)
         {
-            Debug.Log("OnJumped");
             if (type is JumpType.Jump or JumpType.Coyote or JumpType.WallJump)
             {
                 _anim.SetTrigger(JumpKey);
