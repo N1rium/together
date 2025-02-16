@@ -32,7 +32,6 @@ namespace TarodevController
         public event Action<Vector2> Repositioned;
         public event Action<bool> ToggledPlayer;
         public event Action<bool> SwimmingChanged;
-
         public bool Active { get; private set; } = true;
         public Vector2 Up { get; private set; }
         public Vector2 Right { get; private set; }
@@ -745,6 +744,8 @@ namespace TarodevController
         }
 
         #endregion
+
+        public GeneratedCharacterSize GeneratedCharacterSize() => Stats.CharacterSize.GenerateCharacterSize();
     }
 
     public enum JumpType
@@ -755,18 +756,10 @@ namespace TarodevController
         WallJump
     }
 
-    public interface IPlayerController
+    public interface IPlayerController : IPlayerActions
     {
         public PlayerStats Stats { get; }
         public ControllerState State { get; }
-        public event Action<JumpType> Jumped;
-        public event Action<bool, float> GroundedChanged;
-        public event Action<bool, Vector2> DashChanged;
-        public event Action<bool> WallGrabChanged;
-        public event Action<Vector2> Repositioned;
-        public event Action<bool> ToggledPlayer;
-        public event Action<bool> SwimmingChanged;
-
         public bool Active { get; }
         public Vector2 Up { get; }
         public bool Crouching { get; }
@@ -783,6 +776,18 @@ namespace TarodevController
         public void LoadState(ControllerState state);
         public void RepositionImmediately(Vector2 position, bool resetVelocity = false);
         public void TogglePlayer(bool on);
+    }
+
+    public interface IPlayerActions
+    {
+        public event Action<JumpType> Jumped;
+        public event Action<bool, float> GroundedChanged;
+        public event Action<bool, Vector2> DashChanged;
+        public event Action<bool> WallGrabChanged;
+        public event Action<Vector2> Repositioned;
+        public event Action<bool> ToggledPlayer;
+        public event Action<bool> SwimmingChanged;
+        public GeneratedCharacterSize GeneratedCharacterSize();
     }
 
     public interface ISpeedModifier

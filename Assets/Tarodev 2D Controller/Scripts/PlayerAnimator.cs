@@ -39,6 +39,7 @@ namespace TarodevController
 
         private AudioSource _source;
         private IPlayerController _player;
+        private IPlayerActions _playerActions;
         private Vector2 _defaultSpriteSize;
         private GeneratedCharacterSize _character;
         private Vector3 _trailOffset;
@@ -49,35 +50,54 @@ namespace TarodevController
         {
             _source = GetComponent<AudioSource>();
             _player = GetComponentInParent<IPlayerController>();
-            _character = _player.Stats.CharacterSize.GenerateCharacterSize();
+            Debug.Log("Setting PlayerActions to PlayerAnimator");
+            SetPlayerActions(_player);
+            _character = _playerActions.GeneratedCharacterSize();
             _defaultSpriteSize = new Vector2(1, _character.Height);
             _originalTrailTime = _trail.time;
         }
 
         private void OnEnable()
         {
-            _player.Jumped += OnJumped;
-            _player.GroundedChanged += OnGroundedChanged;
-            _player.DashChanged += OnDashChanged;
-            _player.WallGrabChanged += OnWallGrabChanged;
-            _player.Repositioned += PlayerOnRepositioned;
-            _player.ToggledPlayer += PlayerOnToggledPlayer;
-            _player.SwimmingChanged += OnSwimmingChanged;
-
-            _moveParticles.Play();
+            RegisterEvents();
         }
         
         private void OnDisable()
         {
-            _player.Jumped -= OnJumped;
-            _player.GroundedChanged -= OnGroundedChanged;
-            _player.DashChanged -= OnDashChanged;
-            _player.WallGrabChanged -= OnWallGrabChanged;
-            _player.Repositioned -= PlayerOnRepositioned;
-            _player.ToggledPlayer -= PlayerOnToggledPlayer;
-            _player.SwimmingChanged -= OnSwimmingChanged;
+            UnregisterEvents();
+        }
+
+        private void RegisterEvents()
+        {
+            _playerActions.Jumped += OnJumped;
+            _playerActions.GroundedChanged += OnGroundedChanged;
+            _playerActions.DashChanged += OnDashChanged;
+            _playerActions.WallGrabChanged += OnWallGrabChanged;
+            _playerActions.Repositioned += PlayerOnRepositioned;
+            _playerActions.ToggledPlayer += PlayerOnToggledPlayer;
+            _playerActions.SwimmingChanged += OnSwimmingChanged;
+
+            _moveParticles.Play();
+        }
+
+        private void UnregisterEvents()
+        {
+            _playerActions.Jumped -= OnJumped;
+            _playerActions.GroundedChanged -= OnGroundedChanged;
+            _playerActions.DashChanged -= OnDashChanged;
+            _playerActions.WallGrabChanged -= OnWallGrabChanged;
+            _playerActions.Repositioned -= PlayerOnRepositioned;
+            _playerActions.ToggledPlayer -= PlayerOnToggledPlayer;
+            _playerActions.SwimmingChanged -= OnSwimmingChanged;
 
             _moveParticles.Stop();
+        }
+
+        public void SetPlayerActions(IPlayerActions playerActions)
+        {
+            _playerActions = playerActions;
+            UnregisterEvents();
+            RegisterEvents();
         }
 
         private void Update()
@@ -327,6 +347,7 @@ namespace TarodevController
 
         private void OnJumped(JumpType type)
         {
+            Debug.Log("OnJumped");
             if (type is JumpType.Jump or JumpType.Coyote or JumpType.WallJump)
             {
                 _anim.SetTrigger(JumpKey);

@@ -237,6 +237,7 @@ MonoBehaviour:
   vcam: {fileID: 9112181384590843081}
   playerInput: {fileID: 3688991754759325103}
   playerController: {fileID: 1066582894176371284}
+  playerAnimator: {fileID: 3388342872686156354}
   Nickname:
     m_InternalValue:
       utf8LengthInBytes: 0
@@ -442,7 +443,7 @@ MonoBehaviour:
   NetworkTransformExpanded: 1
   AuthorityMode: 0
   TickSyncChildren: 0
-  UseUnreliableDeltas: 1
+  UseUnreliableDeltas: 0
   SyncPositionX: 1
   SyncPositionY: 1
   SyncPositionZ: 0
@@ -460,8 +461,8 @@ MonoBehaviour:
   UseHalfFloatPrecision: 0
   InLocalSpace: 0
   SwitchTransformSpaceWhenParented: 0
-  Interpolate: 0
-  SlerpPosition: 1
+  Interpolate: 1
+  SlerpPosition: 0
 --- !u!1 &1007083872188358457
 GameObject:
   m_ObjectHideFlags: 0
