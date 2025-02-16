@@ -93,15 +93,9 @@ namespace Networking
             var region = regions[0].Id;
             var hostAllocation = await RelayService.Instance.CreateAllocationAsync(maxConnections, region);
             var relayServerData = hostAllocation.ToRelayServerData("udp");
-            /*Allocation allocation = await RelayService.Instance.CreateAllocationAsync(maxConnections);*/
+
             _networkManager.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
             var joinCode = await RelayService.Instance.GetJoinCodeAsync(hostAllocation.AllocationId);
-
-            /*var colorString = Colors[ColorIndex % Colors.Length].ToString();
-            var rgba = colorString.Substring(5, colorString.Length - 6).Split(", ");
-
-            var connectionData = $"{PlayerName}:{rgba[0]}:{rgba[1]}:{rgba[2]}";
-            _networkManager.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(connectionData);*/
             return _networkManager.StartHost() ? joinCode : null;
         }
 
