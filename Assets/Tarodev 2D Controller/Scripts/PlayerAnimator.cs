@@ -76,6 +76,7 @@ namespace TarodevController
             _playerActions.Repositioned += PlayerOnRepositioned;
             _playerActions.ToggledPlayer += PlayerOnToggledPlayer;
             _playerActions.SwimmingChanged += OnSwimmingChanged;
+            _playerActions.CrouchingChanged += CrouchingChanged;
 
             _moveParticles.Play();
         }
@@ -89,6 +90,7 @@ namespace TarodevController
             _playerActions.Repositioned -= PlayerOnRepositioned;
             _playerActions.ToggledPlayer -= PlayerOnToggledPlayer;
             _playerActions.SwimmingChanged -= OnSwimmingChanged;
+            _playerActions.CrouchingChanged -= CrouchingChanged;
 
             _moveParticles.Stop();
         }
@@ -113,8 +115,6 @@ namespace TarodevController
             HandleIdleSpeed(xInput);
 
             HandleCharacterTilt(xInput);
-
-            HandleCrouching();
 
             HandleWallSlideEffects();
             
@@ -317,27 +317,21 @@ namespace TarodevController
         #endregion
 
         #region Crouch & Slide
-
-        private bool _crouching;
+        
         private Vector2 _currentCrouchSizeVelocity;
 
-        private void HandleCrouching()
+        private void CrouchingChanged(bool crouching)
         {
-            if (!_crouching && _player.Crouching)
+            if (crouching)
             {
-                _source.PlayOneShot(_slideClips[Random.Range(0, _slideClips.Length)], Mathf.InverseLerp(0, 5, Mathf.Abs(_player.Velocity.x)));
-                _crouching = true;
+                _source.PlayOneShot(_slideClips[Random.Range(0, _slideClips.Length)], 0.5f);
                 CancelSquish();
-            }
-            else if (_crouching && !_player.Crouching)
-            {
-                _crouching = false;
             }
 
             if (!_isSquishing)
             {
                 var percentage = _character.CrouchingHeight / _character.Height;
-                _sprite.size = Vector2.SmoothDamp(_sprite.size, new Vector2(1, _crouching ? _character.Height * percentage : _character.Height), ref _currentCrouchSizeVelocity, 0.03f);
+                _sprite.size = Vector2.SmoothDamp(_sprite.size, new Vector2(1, crouching ? _character.Height * percentage : _character.Height), ref _currentCrouchSizeVelocity, 0.03f);
             }
         }
 

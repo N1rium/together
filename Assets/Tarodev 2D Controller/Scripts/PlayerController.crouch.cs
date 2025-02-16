@@ -23,11 +23,19 @@ namespace TarodevController
             if (shouldCrouch)
             {
                 _timeStartedCrouching = _time;
+                if (!Crouching)
+                {
+                    CrouchingChanged?.Invoke(true);
+                }
                 Crouching = true;
             }
             else
             {
                 if (!CanStand) return;
+                if (Crouching)
+                {
+                    CrouchingChanged?.Invoke(false);
+                }
                 Crouching = false;
             }
 

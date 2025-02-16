@@ -93,7 +93,7 @@ namespace Networking
             playerController.ToggledPlayer -= ToggledPlayer;
             playerController.SwimmingChanged -= SwimmingChanged;*/
         }
-        
+
         #region Jump RPCs
 
         [Rpc(SendTo.Server)]
@@ -177,6 +177,7 @@ namespace Networking
         public event Action<Vector2> Repositioned;
         public event Action<bool> ToggledPlayer;
         public event Action<bool> SwimmingChanged;
+        public event Action<bool> CrouchingChanged;
         public GeneratedCharacterSize GeneratedCharacterSize()
         {
             return playerController.Stats.CharacterSize.GenerateCharacterSize();

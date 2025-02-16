@@ -32,6 +32,7 @@ namespace TarodevController
         public event Action<Vector2> Repositioned;
         public event Action<bool> ToggledPlayer;
         public event Action<bool> SwimmingChanged;
+        public event Action<bool> CrouchingChanged;
         public bool Active { get; private set; } = true;
         public Vector2 Up { get; private set; }
         public Vector2 Right { get; private set; }
@@ -787,6 +788,7 @@ namespace TarodevController
         public event Action<Vector2> Repositioned;
         public event Action<bool> ToggledPlayer;
         public event Action<bool> SwimmingChanged;
+        public event Action<bool> CrouchingChanged;
         public GeneratedCharacterSize GeneratedCharacterSize();
     }
 
