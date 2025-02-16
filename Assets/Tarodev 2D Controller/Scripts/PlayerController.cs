@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // TODO - Should climbing (attaching to walls) really reset double jump?
-// TODO - Handle water (Water layer)?
 // TODO - One way platforms?
 
 namespace TarodevController

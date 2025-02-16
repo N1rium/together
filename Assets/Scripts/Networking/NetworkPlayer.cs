@@ -48,8 +48,8 @@ namespace Networking
                 Destroy(playerController);
                 Destroy(GetComponent<ConstantForce2D>());
                 Destroy(GetComponent<Rigidbody2D>());
-                /*Destroy(GetComponent<BoxCollider2D>());
-                Destroy(GetComponent<CapsuleCollider2D>());*/
+                Destroy(GetComponent<BoxCollider2D>());
+                Destroy(GetComponent<CapsuleCollider2D>());
             }
         
             // Ensure nickname is updated initially when the object spawns
