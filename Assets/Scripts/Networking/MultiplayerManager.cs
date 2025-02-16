@@ -26,12 +26,14 @@ namespace Networking
         public Color[] Colors;
         public int ColorIndex;
         public Color Color;
+        public string Code;
     
         void Awake()
         {
             _networkManager = GetComponent<NetworkManager>();
         }
 
+        public void SetCode(string code) => Code = code;
         private void OnNameChanged(string nick)
         {
             PlayerName = nick;
@@ -119,6 +121,11 @@ namespace Networking
             JoinCode();
         }
 
+        public void JoinWithCode()
+        {
+            JoinCode(Code);
+        }
+
         public void Host()
         {
             Create();
@@ -131,16 +138,22 @@ namespace Networking
             await Api.Post<CodeDto>($"/matchmaking/code/{code}", null);
         }
 
-        public async void JoinCode()
+        public async void JoinCode(string code = "")
         {
-            var resp = await Api.Get<CodeDto>("/matchmaking/code");
-            if (resp.data == null || resp.data.code == null || resp.data.code == "")
+            string joinCode = code;
+            if (joinCode.Length <= 0)
             {
-                Debug.LogWarning("No Code Available to join!");
-                return;
+                var resp = await Api.Get<CodeDto>("/matchmaking/code");
+                if (resp.data == null || resp.data.code == null || resp.data.code == "")
+                {
+                    Debug.LogWarning("No Code Available to join!");
+                    return;
+                }
+
+                joinCode = resp.data.code;
             }
             
-            await StartClientWithRelay(resp.data.code);
+            await StartClientWithRelay(joinCode);
         }
     }
 
