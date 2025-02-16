@@ -328,11 +328,15 @@ namespace TarodevController
                 CancelSquish();
             }
 
-            if (!_isSquishing)
-            {
-                var percentage = _character.CrouchingHeight / _character.Height;
-                _sprite.size = Vector2.SmoothDamp(_sprite.size, new Vector2(1, crouching ? _character.Height * percentage : _character.Height), ref _currentCrouchSizeVelocity, 0.03f);
-            }
+            if (_isSquishing) return;
+            var percentage = _character.CrouchingHeight / _character.Height;
+            _sprite.size = new(_sprite.size.x, crouching ? _character.Height * percentage : _character.Height);
+            
+            // this is not working unless called every frame
+            // TODO - Consider using a tween or something for the scale transition effect to take place.
+            /*
+            _sprite.size = Vector2.SmoothDamp(_sprite.size, new Vector2(1, crouching ? _character.Height * percentage : _character.Height), ref _currentCrouchSizeVelocity, 0.03f);
+        */
         }
 
         #endregion

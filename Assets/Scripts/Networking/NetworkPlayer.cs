@@ -48,8 +48,8 @@ namespace Networking
                 Destroy(playerController);
                 Destroy(GetComponent<ConstantForce2D>());
                 Destroy(GetComponent<Rigidbody2D>());
-                Destroy(GetComponent<BoxCollider2D>());
-                Destroy(GetComponent<CapsuleCollider2D>());
+                /*Destroy(GetComponent<BoxCollider2D>());
+                Destroy(GetComponent<CapsuleCollider2D>());*/
             }
         
             // Ensure nickname is updated initially when the object spawns
@@ -78,9 +78,10 @@ namespace Networking
             playerController.GroundedChanged += GroundedServerRpc;
             playerController.DashChanged += DashServerRpc;
             playerController.WallGrabChanged += WallGrabServerRpc;
+            playerController.CrouchingChanged += CrouchServerRpc;
+            playerController.SwimmingChanged += SwimmingChanged;
             /*playerController.Repositioned += Repositioned;
-            playerController.ToggledPlayer += ToggledPlayer;
-            playerController.SwimmingChanged += SwimmingChanged;*/
+            playerController.ToggledPlayer += ToggledPlayer;*/
         }
 
         private void UnregisterPlayerEvents()
@@ -89,9 +90,10 @@ namespace Networking
             playerController.GroundedChanged -= GroundedServerRpc;
             playerController.DashChanged -= DashServerRpc;
             playerController.WallGrabChanged -= WallGrabServerRpc;
+            playerController.CrouchingChanged -= CrouchServerRpc;
+            playerController.SwimmingChanged -= SwimmingChanged;
             /*playerController.Repositioned -= Repositioned;
-            playerController.ToggledPlayer -= ToggledPlayer;
-            playerController.SwimmingChanged -= SwimmingChanged;*/
+            playerController.ToggledPlayer -= ToggledPlayer;*/
         }
 
         #region Jump RPCs
@@ -165,6 +167,44 @@ namespace Networking
             if (!IsOwner)
             {
                 WallGrabChanged?.Invoke(grabbing);
+            }
+        }
+        
+        #endregion
+        
+        #region Crouch RPCs
+        
+        [Rpc(SendTo.Server)]
+        private void CrouchServerRpc(bool crouching)
+        {
+            CrouchClientRpc(crouching);
+        }
+        
+        [Rpc(SendTo.ClientsAndHost)]
+        private void CrouchClientRpc(bool crouching)
+        {
+            if (!IsOwner)
+            {
+                CrouchingChanged?.Invoke(crouching);
+            }
+        }
+        
+        #endregion
+        
+        #region Swim RPCs
+        
+        [Rpc(SendTo.Server)]
+        private void SwimServerRpc(bool swimming)
+        {
+            SwimClientRpc(swimming);
+        }
+        
+        [Rpc(SendTo.ClientsAndHost)]
+        private void SwimClientRpc(bool swimming)
+        {
+            if (!IsOwner)
+            {
+                SwimmingChanged?.Invoke(swimming);
             }
         }
         
