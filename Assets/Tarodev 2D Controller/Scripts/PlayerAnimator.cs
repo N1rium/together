@@ -283,6 +283,10 @@ namespace TarodevController
         private void HandleIdleSpeed(float xInput)
         {
             var inputStrength = Mathf.Abs(xInput);
+            if (_isNpc && _grounded && HasNpcWalked())
+            {
+                inputStrength = 1f;
+            }
             _anim.SetFloat(IdleSpeedKey, Mathf.Lerp(1, _maxIdleSpeed, inputStrength));
             _moveParticles.transform.localScale = Vector3.MoveTowards(_moveParticles.transform.localScale,
                 Vector3.one * inputStrength, 2 * Time.deltaTime);
@@ -290,7 +294,8 @@ namespace TarodevController
 
         private void HandleSpriteFlip(float xInput)
         {
-            if (_isNpc && Math.Abs(_lastPos.x - transform.position.x) > 0.001f)
+            // If this is another player (Networked)
+            if (_isNpc && HasNpcWalked())
             {
                 _sprite.flipX = _lastPos.x > transform.position.x;
                 return;
@@ -298,6 +303,8 @@ namespace TarodevController
             
             if (_player.Input.x != 0) _sprite.flipX = xInput < 0;
         }
+
+        private bool HasNpcWalked() => Math.Abs(_lastPos.x - transform.position.x) > 0.001f;
 
         #endregion
 
@@ -343,7 +350,7 @@ namespace TarodevController
             if (_isSquishing) return;
             var percentage = _character.CrouchingHeight / _character.Height;
             var targetHeight = crouching ? _character.Height * percentage : _character.Height;
-            _sprite.size = new(1f, crouching ? _character.Height * percentage : _character.Height);
+            _sprite.size = new(1f, targetHeight);
             
             // this is not working unless called every frame
             // TODO - Consider using a tween or something for the scale transition effect to take place.
@@ -438,13 +445,14 @@ namespace TarodevController
 
         private void HandleRunning()
         {
-            if (!_grounded) return;
+            if (!_grounded || !_canPlayRunSound) return;
             var runningThisFrame = _grounded && _player.Velocity.x != 0 && _player.Input.x != 0;
-            if (!runningThisFrame) return;
-            if (_canPlayRunSound)
+            if (_isNpc)
             {
-                StartCoroutine(DelayedRun());
+                runningThisFrame = _grounded && Math.Abs(transform.position.x - _lastPos.x) > 0.05f;
             }
+            if (!runningThisFrame) return;
+            StartCoroutine(DelayedRun());
         }
 
         private bool _canPlayRunSound = true;
