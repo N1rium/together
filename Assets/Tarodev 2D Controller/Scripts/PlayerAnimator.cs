@@ -329,7 +329,8 @@ namespace TarodevController
 
             if (_isSquishing) return;
             var percentage = _character.CrouchingHeight / _character.Height;
-            _sprite.size = new(_sprite.size.x, crouching ? _character.Height * percentage : _character.Height);
+            var targetHeight = crouching ? _character.Height * percentage : _character.Height;
+            _sprite.size = new(1f, crouching ? _character.Height * percentage : _character.Height);
             
             // this is not working unless called every frame
             // TODO - Consider using a tween or something for the scale transition effect to take place.
