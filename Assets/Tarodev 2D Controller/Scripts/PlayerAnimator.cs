@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,6 +46,8 @@ namespace TarodevController
         private Vector3 _trailOffset;
         private Vector2 _trailVel;
         private Vector2 _lastPos;
+
+        private bool _isNpc;
 
         private void Awake()
         {
@@ -94,6 +97,8 @@ namespace TarodevController
             _moveParticles.Stop();
         }
 
+        public void SetNpc(bool val) => _isNpc = val;
+
         public void SetPlayerActions(IPlayerActions playerActions)
         {
             _playerActions = playerActions;
@@ -118,6 +123,8 @@ namespace TarodevController
             HandleWallSlideEffects();
             
             HandleRunning();
+
+            _lastPos = transform.position;
         }
 
         #region Squish
@@ -283,6 +290,12 @@ namespace TarodevController
 
         private void HandleSpriteFlip(float xInput)
         {
+            if (_isNpc && Math.Abs(_lastPos.x - transform.position.x) > 0.001f)
+            {
+                _sprite.flipX = _lastPos.x > transform.position.x;
+                return;
+            }
+            
             if (_player.Input.x != 0) _sprite.flipX = xInput < 0;
         }
 

@@ -44,6 +44,7 @@ namespace Networking
             else
             {
                 playerAnimator.SetPlayerActions(this);
+                playerAnimator.SetNpc(true);
                 Destroy(playerInput);
                 Destroy(playerController);
                 Destroy(GetComponent<ConstantForce2D>());
