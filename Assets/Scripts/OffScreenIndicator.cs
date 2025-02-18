@@ -1,10 +1,14 @@
+using TMPro;
 using UnityEngine;
 
 public class OffScreenIndicator : MonoBehaviour
 {
     public Transform target; // The object to track
     public RectTransform indicator; // The UI indicator (arrow/circle)
+    public RectTransform arrow;
     public float padding = 50f; // Padding from the screen edge
+
+    [SerializeField] private TMP_Text _text;
 
     private bool _isActive;
     
@@ -41,7 +45,9 @@ public class OffScreenIndicator : MonoBehaviour
             // Rotate the indicator to point toward the target
             Vector3 direction = (target.position - Camera.main.transform.position).normalized;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            indicator.rotation = Quaternion.Euler(0, 0, angle);
+            arrow.rotation = Quaternion.Euler(0, 0, angle);
+            
+            _text.text = $"{Mathf.RoundToInt(Vector3.Distance(Camera.main.transform.position, target.position))}m";
         }
         else
         {
