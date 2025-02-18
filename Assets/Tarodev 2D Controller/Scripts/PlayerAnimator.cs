@@ -53,7 +53,7 @@ namespace TarodevController
         {
             _source = GetComponent<AudioSource>();
             _player = GetComponentInParent<IPlayerController>();
-            SetPlayerActions(_player);
+            SetPlayerActions(_player, false);
             _character = _playerActions.GeneratedCharacterSize();
             _defaultSpriteSize = new Vector2(1, _character.Height);
             _originalTrailTime = _trail.time;
@@ -99,9 +99,11 @@ namespace TarodevController
 
         public void SetNpc(bool val) => _isNpc = val;
 
-        public void SetPlayerActions(IPlayerActions playerActions)
+        // withEvents so only Network logic adds then (otherwise added in OnEnable)
+        public void SetPlayerActions(IPlayerActions playerActions, bool withEvents)
         {
             _playerActions = playerActions;
+            if (!withEvents) return;
             UnregisterEvents();
             RegisterEvents();
         }

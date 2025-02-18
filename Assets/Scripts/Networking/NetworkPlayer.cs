@@ -31,6 +31,7 @@ namespace Networking
             
             vcam.enabled = IsOwner;
             _multiplayerManager = GameObject.Find("NetworkManager").GetComponent<MultiplayerManager>();
+            playerAnimator.GetComponent<AudioListener>().enabled = IsOwner;
             
             if (IsOwner)
             {
@@ -43,7 +44,7 @@ namespace Networking
             }
             else
             {
-                playerAnimator.SetPlayerActions(this);
+                playerAnimator.SetPlayerActions(this, true);
                 playerAnimator.SetNpc(true);
                 Destroy(playerInput);
                 Destroy(playerController);

@@ -474,6 +474,7 @@ GameObject:
   - component: {fileID: 6292091607506746019}
   - component: {fileID: 2708745114350731464}
   - component: {fileID: 3388342872686156354}
+  - component: {fileID: 1436136144153040006}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -764,6 +765,14 @@ MonoBehaviour:
   _runningTilt: 7
   _maxTilt: 45
   _tiltSmoothTime: 0.1
+--- !u!81 &1436136144153040006
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007083872188358457}
+  m_Enabled: 0
 --- !u!1 &1032321221504231521
 GameObject:
   m_ObjectHideFlags: 0
@@ -30267,7 +30276,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0
+    scalar: 0.1
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -30462,7 +30471,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
-        m_ColorSpace: -1
+        m_ColorSpace: 0
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
@@ -31081,7 +31090,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 50
+      scalar: 75
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -31519,7 +31528,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
+        key0: {r: 1, g: 1, b: 1, a: 0.39215687}
         key1: {r: 1, g: 1, b: 1, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -31544,7 +31553,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
-        m_ColorSpace: -1
+        m_ColorSpace: 0
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
