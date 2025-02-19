@@ -94,7 +94,7 @@ namespace Networking
             var regions = await RelayService.Instance.ListRegionsAsync();
             var region = regions[0].Id;
             var hostAllocation = await RelayService.Instance.CreateAllocationAsync(maxConnections, region);
-            var relayServerData = hostAllocation.ToRelayServerData("udp");
+            var relayServerData = hostAllocation.ToRelayServerData("dtls");
 
             _networkManager.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
             var joinCode = await RelayService.Instance.GetJoinCodeAsync(hostAllocation.AllocationId);
@@ -110,7 +110,7 @@ namespace Networking
             }
             
             var joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
-            var relayServerData = joinAllocation.ToRelayServerData("udp");
+            var relayServerData = joinAllocation.ToRelayServerData("dtls");
             _networkManager.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
             _networkManager.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(PlayerName);
             return !string.IsNullOrEmpty(joinCode) && _networkManager.StartClient();

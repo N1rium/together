@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -340,7 +341,8 @@ namespace TarodevController
         #region Crouch & Slide
         
         private Vector2 _currentCrouchSizeVelocity;
-
+        private Tween _crouchTween;
+        
         private void CrouchingChanged(bool crouching)
         {
             if (crouching)
@@ -352,7 +354,12 @@ namespace TarodevController
             if (_isSquishing) return;
             var percentage = _character.CrouchingHeight / _character.Height;
             var targetHeight = crouching ? _character.Height * percentage : _character.Height;
-            _sprite.size = new(1f, targetHeight);
+            
+            var ease = crouching ? Ease.OutBack : Ease.OutExpo;
+            var duration = crouching ? 0.25f : 0.1f;
+            _crouchTween.Kill();
+            _crouchTween = DOTween.To(() => _sprite.size.y, y 
+                => _sprite.size = new(1f, y), targetHeight, duration).SetEase(ease);
             
             // this is not working unless called every frame
             // TODO - Consider using a tween or something for the scale transition effect to take place.
