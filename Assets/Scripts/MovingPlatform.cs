@@ -1,8 +1,10 @@
 using System;
 using System.Diagnostics;
 using DG.Tweening;
+using Networking;
 using Unity.Netcode;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class MovingPlatform : NetworkBehaviour
 {
