@@ -56,7 +56,7 @@ namespace Networking
         
             // Ensure nickname is updated initially when the object spawns
             UpdateNicknameText(Nickname.Value.Value);
-            spriteRenderer.color = Color.Value;
+            UpdatePlayerColor(Color.Value);
         }
     
         private void OnNicknameChanged(FixedString32Bytes prev, FixedString32Bytes curr)
@@ -66,7 +66,13 @@ namespace Networking
     
         private void OnColorChanged(Color prev, Color curr)
         {
-            spriteRenderer.color = curr;
+            UpdatePlayerColor(curr);
+        }
+
+        private void UpdatePlayerColor(Color c)
+        {
+            spriteRenderer.color = c;
+            playerAnimator.SetPlayerParticleColors(c);
         }
     
         private void UpdateNicknameText(string value)

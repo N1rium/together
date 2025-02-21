@@ -63,6 +63,7 @@ namespace TarodevController
         private void OnEnable()
         {
             RegisterEvents();
+            SetPlayerParticleColors(_sprite.color);
         }
         
         private void OnDisable()
@@ -115,7 +116,7 @@ namespace TarodevController
 
             var xInput = _player.Input.x;
 
-            SetParticleColor(-_player.Up, _moveParticles);
+            /*SetParticleColor(-_player.Up, _moveParticles);*/
 
             HandleSpriteFlip(xInput);
 
@@ -229,7 +230,7 @@ namespace TarodevController
                 _wallSlideParticles.Stop();
             }
 
-            SetParticleColor(new Vector2(_player.WallDirection, 0), _wallSlideParticles);
+            /*SetParticleColor(new Vector2(_player.WallDirection, 0), _wallSlideParticles);*/
             _wallSlideParticles.transform.localPosition = new Vector3(_wallSlideParticleOffset * _player.WallDirection, 0, 0);
 
             var requiredAudio = _isSliding || _player.ClimbingLadder && _player.Velocity.y < 0;
@@ -492,6 +493,18 @@ namespace TarodevController
                 : new ParticleSystem.MinMaxGradient(Color.white);
 
             SetColor(system);
+        }
+
+        public void SetPlayerParticleColors(Color c)
+        {
+            Debug.Log($"SETTING COLOR: {c.ToString()}");
+            var grad = new ParticleSystem.MinMaxGradient(c);
+            var targets = new[] { _moveParticles, _dashParticles, _jumpParticles, _doubleJumpParticles, _launchParticles, _wallSlideParticles };
+            foreach (var target in targets)
+            {
+                var main = target.main;
+                main.startColor = grad;
+            }
         }
 
         private void SetColor(ParticleSystem ps)
