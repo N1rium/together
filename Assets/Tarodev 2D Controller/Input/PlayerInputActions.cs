@@ -133,10 +133,28 @@ namespace TarodevController
                     ""name"": ""ExampleAction"",
                     ""type"": ""Button"",
                     ""id"": ""fac85392-9cd4-4c47-a8da-8911e5b74689"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Horizontal"",
+                    ""type"": ""Value"",
+                    ""id"": ""df49f95f-4665-48cd-8495-7e8d90e37dc6"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Vertical"",
+                    ""type"": ""Value"",
+                    ""id"": ""1e41ad33-924b-4a26-b851-fea57e082a9c"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -381,6 +399,28 @@ namespace TarodevController
                     ""action"": ""ExampleAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3cd5fe0f-8d45-49b0-800e-6dc232eac66c"",
+                    ""path"": ""<Gamepad>/leftStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Horizontal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""30dd7f55-cf3e-4237-b860-dc87a921095e"",
+                    ""path"": ""<Gamepad>/leftStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -455,6 +495,8 @@ namespace TarodevController
             m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
             m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
             m_Player_ExampleAction = m_Player.FindAction("ExampleAction", throwIfNotFound: true);
+            m_Player_Horizontal = m_Player.FindAction("Horizontal", throwIfNotFound: true);
+            m_Player_Vertical = m_Player.FindAction("Vertical", throwIfNotFound: true);
         }
 
         ~@PlayerInputActions()
@@ -540,6 +582,8 @@ namespace TarodevController
         private readonly InputAction m_Player_Dash;
         private readonly InputAction m_Player_Attack;
         private readonly InputAction m_Player_ExampleAction;
+        private readonly InputAction m_Player_Horizontal;
+        private readonly InputAction m_Player_Vertical;
         /// <summary>
         /// Provides access to input actions defined in input action map "Player".
         /// </summary>
@@ -571,6 +615,14 @@ namespace TarodevController
             /// Provides access to the underlying input action "Player/ExampleAction".
             /// </summary>
             public InputAction @ExampleAction => m_Wrapper.m_Player_ExampleAction;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/Horizontal".
+            /// </summary>
+            public InputAction @Horizontal => m_Wrapper.m_Player_Horizontal;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/Vertical".
+            /// </summary>
+            public InputAction @Vertical => m_Wrapper.m_Player_Vertical;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -612,6 +664,12 @@ namespace TarodevController
                 @ExampleAction.started += instance.OnExampleAction;
                 @ExampleAction.performed += instance.OnExampleAction;
                 @ExampleAction.canceled += instance.OnExampleAction;
+                @Horizontal.started += instance.OnHorizontal;
+                @Horizontal.performed += instance.OnHorizontal;
+                @Horizontal.canceled += instance.OnHorizontal;
+                @Vertical.started += instance.OnVertical;
+                @Vertical.performed += instance.OnVertical;
+                @Vertical.canceled += instance.OnVertical;
             }
 
             /// <summary>
@@ -638,6 +696,12 @@ namespace TarodevController
                 @ExampleAction.started -= instance.OnExampleAction;
                 @ExampleAction.performed -= instance.OnExampleAction;
                 @ExampleAction.canceled -= instance.OnExampleAction;
+                @Horizontal.started -= instance.OnHorizontal;
+                @Horizontal.performed -= instance.OnHorizontal;
+                @Horizontal.canceled -= instance.OnHorizontal;
+                @Vertical.started -= instance.OnVertical;
+                @Vertical.performed -= instance.OnVertical;
+                @Vertical.canceled -= instance.OnVertical;
             }
 
             /// <summary>
@@ -778,6 +842,20 @@ namespace TarodevController
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnExampleAction(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Horizontal" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnHorizontal(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Vertical" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnVertical(InputAction.CallbackContext context);
         }
     }
 }
