@@ -571,6 +571,7 @@ namespace TarodevController
                 if (_frameInput.Move.y != 0) wallVelocity = _frameInput.Move.y * Stats.WallClimbSpeed;
                 else wallVelocity = Mathf.MoveTowards(Mathf.Min(Velocity.y, 0), -Stats.WallClimbSpeed, Stats.WallFallAcceleration * _delta);
 
+                // TODO - Zero for x here seems to solve "jittery" climbing
                 SetVelocity(new Vector2(_rb.linearVelocity.x, wallVelocity));
                 return;
             }
