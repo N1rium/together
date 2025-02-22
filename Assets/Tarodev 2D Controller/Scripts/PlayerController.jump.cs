@@ -62,7 +62,6 @@ namespace TarodevController
             }
             else if (jumpType is JumpType.WallJump)
             {
-                Debug.Log("WALL JUMP, grounded" + _grounded);
                 ToggleOnWall(false);
 
                 _wallJumpCoyoteUsable = false;

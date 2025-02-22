@@ -448,6 +448,9 @@ namespace TarodevController
 
             if (on)
             {
+                // Makes you stop immediately when wall hugging before sliding downwards
+                SetVelocity(Vector2.zero);
+                
                 _decayingTransientVelocity = Vector2.zero;
                 _bufferedJumpUsable = true;
                 _wallJumpCoyoteUsable = true;
