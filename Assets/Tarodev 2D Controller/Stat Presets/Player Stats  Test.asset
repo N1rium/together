@@ -27,6 +27,7 @@ MonoBehaviour:
   VerticalDeadZoneThreshold: 0.3
   HorizontalDeadZoneThreshold: 0.1
   PositionCorrectionMode: 0
+  MaxFallSpeed: 22.5
   BaseSpeed: 15
   Acceleration: 100
   Friction: 150
@@ -80,3 +81,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16
   SwimSpeed: 4
+  SwimDamping: 10
+  SwimDashPower: 10

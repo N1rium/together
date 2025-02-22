@@ -21,6 +21,10 @@ namespace TarodevController
         [Tooltip("Velocity = smoother, but can be occasionally unreliable on jagged terrain. Immediate = Occasionally jittery, but stable")] 
         public PositionCorrectionMode PositionCorrectionMode = PositionCorrectionMode.Velocity;
 
+        [Header("General"), Space] 
+        [Tooltip("Controls maximum fall speed, 0 = ignored")]
+        public float MaxFallSpeed = 25f;
+
         // Movement
         [Header("Movement"), Space] public float BaseSpeed = 9;
         public float Acceleration = 50;

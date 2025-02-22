@@ -131,6 +131,12 @@ namespace TarodevController
             CleanFrameData();
 
             SaveCharacterState();
+
+            if (Stats.MaxFallSpeed == 0f) return;
+            if (_rb.linearVelocityY <= -Stats.MaxFallSpeed)
+            {
+                _rb.linearVelocityY = -Stats.MaxFallSpeed;
+            }
         }
 
         #endregion
