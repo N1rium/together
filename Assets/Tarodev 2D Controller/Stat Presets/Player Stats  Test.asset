@@ -51,10 +51,10 @@ MonoBehaviour:
   AllowWalls: 1
   ClimbableLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
   WallJumpTotalInputLossTime: 0.2
   WallJumpInputLossReturnTime: 0.5
-  RequireInputPush: 0
+  RequireInputPush: 1
   WallJumpPower: {x: 20, y: 18}
   WallPushPower: {x: 20, y: 18}
   WallClimbSpeed: 5
