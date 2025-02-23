@@ -425,8 +425,8 @@ namespace TarodevController
 
             _wallDirThisFrame = hasHitWall ? (int)rayDir : 0;
 
-            if (!_isOnWall && ShouldStickToWall() && _time > _canGrabWallAfter && Velocity.y < 0) ToggleOnWall(true);
-            else if (_isOnWall && !ShouldStickToWall()) ToggleOnWall(false);
+            if (!_isOnWall && (ShouldStickToWall() || IsGrabbingWall) && _time > _canGrabWallAfter && Velocity.y < 0) ToggleOnWall(true);
+            else if (_isOnWall && !ShouldStickToWall() && !IsGrabbingWall) ToggleOnWall(false);
 
             // If we're not grabbing a wall, let's check if we're against one for wall-jumping purposes
             if (!_isOnWall)
@@ -570,19 +570,21 @@ namespace TarodevController
                 SetVelocity(_dashVel);
                 return;
             }
-
-            if (IsGrabbingWall)
-            {
-                _constantForce.force = Vector2.zero;
-                var wallVelocity = _frameInput.Move.y * Stats.WallClimbSpeed;
-                SetVelocity(new Vector2(_rb.linearVelocity.x, wallVelocity));
-                return;
-            }
             
             if (_isOnWall)
             {
+                /*float wallVelocity = _frameInput.Move.y * Stats.WallClimbSpeed;*/
+                float wallVelocity;
                 _constantForce.force = Vector2.zero;
-                var wallVelocity = Mathf.MoveTowards(Mathf.Min(Velocity.y, 0), -Stats.WallClimbSpeed, Stats.WallFallAcceleration * _delta);
+                if (IsGrabbingWall)
+                {
+                    wallVelocity = Mathf.MoveTowards(Velocity.y, _frameInput.Move.y * Stats.WallClimbSpeed,
+                        Stats.WallFallAcceleration * _delta);
+                    SetVelocity(new Vector2(0f, wallVelocity));
+                    return;
+                }
+                
+                wallVelocity = Mathf.MoveTowards(Mathf.Min(Velocity.y, 0), -Stats.WallClimbSpeed, Stats.WallFallAcceleration * _delta);
 
                 // TODO - Zero for x here seems to solve "jittery" climbing
                 SetVelocity(new Vector2(_rb.linearVelocity.x, wallVelocity));

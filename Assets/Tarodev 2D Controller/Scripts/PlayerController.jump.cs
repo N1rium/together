@@ -68,15 +68,30 @@ namespace TarodevController
                 _wallJumpInputNerfPoint = 0;
                 _returnWallInputLossAfter = _time + Stats.WallJumpTotalInputLossTime;
                 _wallDirectionForJump = _wallDirThisFrame;
+                
+                // TODO - Jump straight up if Wall-climbing
+                if (IsGrabbingWall)
+                {
+                    AddFrameForce(Stats.WallGrabPower);
+                    return;
+                }
+                
                 if (_isOnWall || IsPushingAgainstWall)
                 {
-                    Debug.Log("WallJumpPower");
                     AddFrameForce(new Vector2(-_wallDirThisFrame, 1) * Stats.WallJumpPower);
                 }
                 else
                 {
-                    Debug.Log("WallPushPower");
-                    AddFrameForce(new Vector2(-_wallDirThisFrame, 1) * Stats.WallPushPower);
+                    // Fix for not jumping properly when facing away from wall before jumping.
+                    // This however causes some difference depending on the jump you make (face away before or same frame)
+                    var jumpDir = -_wallDirThisFrame;
+                    var power = Stats.WallPushPower;
+                    if (jumpDir == 0)
+                    {
+                        power = Stats.WallJumpPower;
+                        jumpDir = (int)_frameDirection.x;
+                    }
+                    AddFrameForce(new Vector2(jumpDir, 1) * power);
                 }
             }
 
