@@ -169,7 +169,7 @@ namespace TarodevController
             // Airborne collider
             /*_airborneCollider = GetComponent<CapsuleCollider2D>();*/
             /*_airborneCollider.hideFlags = HideFlags.NotEditable;*/
-            _airborneCollider.size = new Vector2(_character.Width - SKIN_WIDTH * 2, _character.Height - SKIN_WIDTH * 2);
+            //_airborneCollider.size = new Vector2(_character.Width - SKIN_WIDTH * 2, _character.Height - SKIN_WIDTH * 2);
             /*_airborneCollider.size = Vector2.one * 0.25f;*/
             _airborneCollider.offset = new Vector2(0, _character.Height / 2);
             /*_airborneCollider.offset = Vector2.zero;*/

@@ -301,7 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c89b8855ab650ac489f1f1b5f2a94751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _airborneCollider: {fileID: 7145429221428886445}
+  _airborneCollider: {fileID: 1168141624914108346}
   <Stats>k__BackingField: {fileID: 11400000, guid: 7da9a0ba9bf66f84f8f7b21070b5fd5c, type: 2}
   _drawGizmos: 1
   _swimColliderWrapper: {fileID: 5831327300578568377}
@@ -1150,7 +1150,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4690135070375544700
 Transform:
   m_ObjectHideFlags: 0
@@ -36063,7 +36063,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1915258592016411760
 Transform:
   m_ObjectHideFlags: 0
@@ -36089,7 +36089,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: a081f785d315a2b43966f129ce852878, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
