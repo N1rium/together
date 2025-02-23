@@ -21,7 +21,7 @@ MonoBehaviour:
   CharacterSize:
     Height: 1.35
     Width: 0.9
-    StepHeight: 0.25
+    StepHeight: 0.33
     CrouchHeight: 0.8
     RayInset: 0.1
   VerticalDeadZoneThreshold: 0.3
@@ -56,7 +56,7 @@ MonoBehaviour:
   WallJumpInputLossReturnTime: 0.5
   RequireInputPush: 1
   WallJumpPower: {x: 20, y: 18}
-  WallPushPower: {x: 20, y: 18}
+  WallPushPower: {x: 16.75, y: 18}
   WallClimbSpeed: 5
   WallFallAcceleration: 5
   WallPopForce: 10
