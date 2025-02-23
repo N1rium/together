@@ -7,13 +7,13 @@ using UnityEngine;
 
 namespace TarodevController
 {
-    [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D), typeof(CapsuleCollider2D))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
     public partial class PlayerController : MonoBehaviour, IPlayerController, IPhysicsObject
     {
         #region References
 
         private BoxCollider2D _collider;
-        private CapsuleCollider2D _airborneCollider;
+        [SerializeField] private CapsuleCollider2D _airborneCollider;
         private ConstantForce2D _constantForce;
         private Rigidbody2D _rb;
         private PlayerInput _playerInput;
@@ -167,8 +167,8 @@ namespace TarodevController
             _collider.enabled = true;
             
             // Airborne collider
-            _airborneCollider = GetComponent<CapsuleCollider2D>();
-            _airborneCollider.hideFlags = HideFlags.NotEditable;
+            /*_airborneCollider = GetComponent<CapsuleCollider2D>();*/
+            /*_airborneCollider.hideFlags = HideFlags.NotEditable;*/
             _airborneCollider.size = new Vector2(_character.Width - SKIN_WIDTH * 2, _character.Height - SKIN_WIDTH * 2);
             /*_airborneCollider.size = Vector2.one * 0.25f;*/
             _airborneCollider.offset = new Vector2(0, _character.Height / 2);
