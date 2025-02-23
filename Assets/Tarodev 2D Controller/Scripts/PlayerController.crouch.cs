@@ -12,7 +12,7 @@ namespace TarodevController
         // We handle crouch AFTER frame movements are done to avoid transient velocity issues
         private void CalculateCrouch()
         {
-            if (!Stats.AllowCrouching) return;
+            if (!Stats.AllowCrouching || IsGrabbingWall) return;
 
             if (!Crouching && CrouchPressed && _grounded) ToggleCrouching(true);
             else if (Crouching && (!CrouchPressed || !_grounded)) ToggleCrouching(false);

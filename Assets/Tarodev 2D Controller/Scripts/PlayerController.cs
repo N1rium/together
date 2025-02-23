@@ -376,6 +376,7 @@ namespace TarodevController
         #region Direction
 
         private Vector2 _frameDirection;
+        private Vector2 _lastFrameDirection;
 
         private void CalculateDirection()
         {
@@ -389,6 +390,8 @@ namespace TarodevController
             }
 
             _frameDirection = _frameDirection.normalized;
+            if (_frameDirection == Vector2.zero) return;
+            _lastFrameDirection = _frameDirection;
         }
 
         #endregion
@@ -400,20 +403,25 @@ namespace TarodevController
         private float _wallJumpInputNerfPoint;
         private int _wallDirectionForJump;
         private bool _isOnWall;
+        private bool _isWallGrabbing;
         private float _timeLeftWall;
         private float _currentWallSpeedVel;
         private float _canGrabWallAfter;
         private int _wallDirThisFrame;
+        private bool _hasWallInFront;
 
         private bool HorizontalInputPressed => Mathf.Abs(_frameInput.Move.x) > Stats.HorizontalDeadZoneThreshold;
         private bool IsPushingAgainstWall => HorizontalInputPressed && (int)Mathf.Sign(_frameDirection.x) == _wallDirThisFrame;
+        public bool IsGrabbingWall => !_grounded && CanStand && _frameInput.GrabHeld && _hasWallInFront;
 
         private void CalculateWalls()
         {
             if (!Stats.AllowWalls) return;
+            
 
             var rayDir = _isOnWall ? WallDirection : _frameDirection.x;
             var hasHitWall = DetectWallCast(rayDir);
+            _hasWallInFront = DetectWallCast(_lastFrameDirection.x); // TODO - Try to avoid two BoxCasts
 
             _wallDirThisFrame = hasHitWall ? (int)rayDir : 0;
 
@@ -448,9 +456,6 @@ namespace TarodevController
 
             if (on)
             {
-                // Makes you stop immediately when wall hugging before sliding downwards
-                SetVelocity(Vector2.zero);
-                
                 _decayingTransientVelocity = Vector2.zero;
                 _bufferedJumpUsable = true;
                 _wallJumpCoyoteUsable = true;
@@ -467,7 +472,7 @@ namespace TarodevController
                     AddFrameForce(new Vector2(0, Stats.WallPopForce), true);
                 }
 
-                ResetAirJumps(); // so that we can air jump even if we didn't leave via a wall jump
+                //ResetAirJumps(); // so that we can air jump even if we didn't leave via a wall jump
             }
 
             WallGrabChanged?.Invoke(on);
@@ -545,7 +550,7 @@ namespace TarodevController
             {
                 _rb.linearVelocity += AdditionalFrameVelocities();
                 _rb.AddForce(_forceToApplyThisFrame * _rb.mass, ForceMode2D.Impulse);
-
+                
                 // Returning provides the crispest & most accurate jump experience
                 // Required for reliable slope jumps
                 return;
@@ -566,13 +571,18 @@ namespace TarodevController
                 return;
             }
 
+            if (IsGrabbingWall)
+            {
+                _constantForce.force = Vector2.zero;
+                var wallVelocity = _frameInput.Move.y * Stats.WallClimbSpeed;
+                SetVelocity(new Vector2(_rb.linearVelocity.x, wallVelocity));
+                return;
+            }
+            
             if (_isOnWall)
             {
                 _constantForce.force = Vector2.zero;
-
-                float wallVelocity;
-                if (_frameInput.Move.y != 0) wallVelocity = _frameInput.Move.y * Stats.WallClimbSpeed;
-                else wallVelocity = Mathf.MoveTowards(Mathf.Min(Velocity.y, 0), -Stats.WallClimbSpeed, Stats.WallFallAcceleration * _delta);
+                var wallVelocity = Mathf.MoveTowards(Mathf.Min(Velocity.y, 0), -Stats.WallClimbSpeed, Stats.WallFallAcceleration * _delta);
 
                 // TODO - Zero for x here seems to solve "jittery" climbing
                 SetVelocity(new Vector2(_rb.linearVelocity.x, wallVelocity));
@@ -736,7 +746,7 @@ namespace TarodevController
             Gizmos.DrawWireCube(pos + Vector2.up * _character.Height / 2, new Vector3(_character.Width, _character.Height));
             Gizmos.color = Color.magenta;
             
-            Gizmos.DrawCube(pos + Vector2.up * 0.75f, Vector2.one * 0.5f);
+            /*Gizmos.DrawCube(pos + Vector2.up * 0.75f, Vector2.one * 0.5f);*/
 
             var rayStart = pos + Vector2.up * _character.StepHeight;
             var rayDir = Vector3.down * _character.StepHeight;

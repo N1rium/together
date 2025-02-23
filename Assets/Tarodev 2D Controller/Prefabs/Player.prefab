@@ -19921,6 +19921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c89b8855ab650ac489f1f1b5f2a94751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _airborneCollider: {fileID: 5731089695359280883}
   <Stats>k__BackingField: {fileID: 11400000, guid: 894dfe33661263b42a8e1490d64c0424, type: 2}
   _drawGizmos: 1
   _swimColliderWrapper: {fileID: 0}
@@ -19999,7 +20000,7 @@ BoxCollider2D:
   m_EdgeRadius: 0.05
 --- !u!70 &5731089695359280883
 CapsuleCollider2D:
-  m_ObjectHideFlags: 8
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
