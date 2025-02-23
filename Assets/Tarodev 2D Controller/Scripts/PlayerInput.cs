@@ -10,7 +10,7 @@ namespace TarodevController
     {
 #if ENABLE_INPUT_SYSTEM
         private PlayerInputActions _actions;
-        private InputAction _move, _jump, _dash, _horizontal, _vertical;
+        private InputAction _move, _jump, _dash, _horizontal, _vertical, _grab;
 
         private void Awake()
         {
@@ -21,6 +21,7 @@ namespace TarodevController
             _dash = player.Dash;
             _vertical = player.Vertical;
             _horizontal = player.Horizontal;
+            _grab = player.Grab;
         }
 
         private void OnEnable() => _actions.Enable();
@@ -41,6 +42,7 @@ namespace TarodevController
                 JumpDown = _jump.WasPressedThisFrame(),
                 JumpHeld = _jump.IsPressed(),
                 DashDown = _dash.WasPressedThisFrame(),
+                GrabHeld = _grab.IsPressed(),
                 Move = move
             };
         }
@@ -64,5 +66,6 @@ namespace TarodevController
         public bool JumpDown;
         public bool JumpHeld;
         public bool DashDown;
+        public bool GrabHeld;
     }
 }

@@ -155,6 +155,15 @@ namespace TarodevController
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Grab"",
+                    ""type"": ""Button"",
+                    ""id"": ""54cc3154-b348-4943-879a-532e7c882659"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -421,6 +430,28 @@ namespace TarodevController
                     ""action"": ""Vertical"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""76eb5e82-5113-4228-bb3d-2a6c26c84048"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Grab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""32b03472-ce5c-478d-a49f-aada1708a7c9"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Grab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -497,6 +528,7 @@ namespace TarodevController
             m_Player_ExampleAction = m_Player.FindAction("ExampleAction", throwIfNotFound: true);
             m_Player_Horizontal = m_Player.FindAction("Horizontal", throwIfNotFound: true);
             m_Player_Vertical = m_Player.FindAction("Vertical", throwIfNotFound: true);
+            m_Player_Grab = m_Player.FindAction("Grab", throwIfNotFound: true);
         }
 
         ~@PlayerInputActions()
@@ -584,6 +616,7 @@ namespace TarodevController
         private readonly InputAction m_Player_ExampleAction;
         private readonly InputAction m_Player_Horizontal;
         private readonly InputAction m_Player_Vertical;
+        private readonly InputAction m_Player_Grab;
         /// <summary>
         /// Provides access to input actions defined in input action map "Player".
         /// </summary>
@@ -623,6 +656,10 @@ namespace TarodevController
             /// Provides access to the underlying input action "Player/Vertical".
             /// </summary>
             public InputAction @Vertical => m_Wrapper.m_Player_Vertical;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/Grab".
+            /// </summary>
+            public InputAction @Grab => m_Wrapper.m_Player_Grab;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -670,6 +707,9 @@ namespace TarodevController
                 @Vertical.started += instance.OnVertical;
                 @Vertical.performed += instance.OnVertical;
                 @Vertical.canceled += instance.OnVertical;
+                @Grab.started += instance.OnGrab;
+                @Grab.performed += instance.OnGrab;
+                @Grab.canceled += instance.OnGrab;
             }
 
             /// <summary>
@@ -702,6 +742,9 @@ namespace TarodevController
                 @Vertical.started -= instance.OnVertical;
                 @Vertical.performed -= instance.OnVertical;
                 @Vertical.canceled -= instance.OnVertical;
+                @Grab.started -= instance.OnGrab;
+                @Grab.performed -= instance.OnGrab;
+                @Grab.canceled -= instance.OnGrab;
             }
 
             /// <summary>
@@ -856,6 +899,13 @@ namespace TarodevController
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnVertical(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Grab" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnGrab(InputAction.CallbackContext context);
         }
     }
 }
