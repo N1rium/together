@@ -13,7 +13,7 @@ namespace TarodevController
         #region References
 
         private BoxCollider2D _collider;
-        [SerializeField] private CapsuleCollider2D _airborneCollider;
+        [SerializeField] private Collider2D _airborneCollider;
         private ConstantForce2D _constantForce;
         private Rigidbody2D _rb;
         private PlayerInput _playerInput;
