@@ -660,11 +660,11 @@ namespace TarodevController
             {
                 step *= Stats.AirFrictionMultiplier;
 
-                if (_wallJumpInputNerfPoint < 1 && (int)Mathf.Sign(xDir.x) == (int)Mathf.Sign(_wallDirectionForJump))
+                /*if (_wallJumpInputNerfPoint < 1 && (int)Mathf.Sign(xDir.x) == (int)Mathf.Sign(_wallDirectionForJump))
                 {
                     if (_time < _returnWallInputLossAfter) xDir.x = -_wallDirectionForJump;
                     else xDir.x *= _wallJumpInputNerfPoint;
-                }
+                }*/
 
                 var targetX = Mathf.MoveTowards(_trimmedFrameVelocity.x, xDir.x * targetSpeed, step);
                 newVelocity = new Vector2(targetX, _rb.linearVelocity.y);
