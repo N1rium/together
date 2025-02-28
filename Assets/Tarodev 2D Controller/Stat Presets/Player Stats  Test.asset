@@ -55,8 +55,8 @@ MonoBehaviour:
   WallJumpTotalInputLossTime: 0.2
   WallJumpInputLossReturnTime: 0.5
   RequireInputPush: 1
-  WallJumpPower: {x: 16.75, y: 18}
-  WallPushPower: {x: 16.75, y: 18}
+  WallJumpPower: {x: 16.5, y: 18}
+  WallPushPower: {x: 16.5, y: 18}
   WallGrabPower: {x: 0, y: 15}
   WallClimbSpeed: 5
   WallFallAcceleration: 75

@@ -437,7 +437,7 @@ namespace TarodevController
 
             bool ShouldStickToWall()
             {
-                if (_wallDirThisFrame == 0 || _grounded) return false;
+                if (_wallDirThisFrame == 0 || _grounded || _dashing) return false;
 
                 if (HorizontalInputPressed && !IsPushingAgainstWall) return false; // If pushing away
                 return !Stats.RequireInputPush || (IsPushingAgainstWall);
@@ -565,11 +565,11 @@ namespace TarodevController
                 return;
             }
 
-            if (_dashing)
+            /*if (_dashing)
             {
                 SetVelocity(_dashVel);
                 return;
-            }
+            }*/
             
             if (_isOnWall)
             {

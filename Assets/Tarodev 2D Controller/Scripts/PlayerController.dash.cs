@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 
 namespace TarodevController
 {
@@ -10,6 +11,8 @@ namespace TarodevController
         private bool _dashing;
         private float _startedDashing;
         private float _nextDashTime;
+        private Tween _dashTween;
+        private Sequence _dashSequence;
 
         private void CalculateDash()
         {
@@ -25,6 +28,27 @@ namespace TarodevController
                 _canDash = false;
                 _startedDashing = _time;
                 _nextDashTime = _time + Stats.DashCooldown;
+                
+                SetVelocity(Vector2.zero);
+                _dashSequence = DOTween.Sequence();
+
+                _dashSequence.Append(_rb.DOMove(_framePosition, 0.05f));
+                
+                _dashSequence.Append(_rb.DOMove(_framePosition + dir * 5f, 0.25f).OnUpdate(() =>
+                {
+                    Debug.Log(_isOnWall);
+                    /*if (!_hasWallInFront) return;
+                    _dashSequence.Kill();*/
+                    /*AddFrameForce(Vector2.up * 20f, true);*/
+                }));
+
+                _dashSequence.OnComplete(() =>
+                {
+                    _dashing = false;
+                });
+                
+                /*_rb.MovePosition(_framePosition + dir * (5f * Time.fixedDeltaTime));*/
+                
                 DashChanged?.Invoke(true, dir);
             }
 
@@ -34,7 +58,7 @@ namespace TarodevController
             _dashing = false;
             DashChanged?.Invoke(false, Vector2.zero);
 
-            SetVelocity(new Vector2(Velocity.x * Stats.DashEndHorizontalMultiplier, Velocity.y));
+            /*SetVelocity(new Vector2(Velocity.x * Stats.DashEndHorizontalMultiplier, Velocity.y));*/
             if (_grounded) _canDash = true;
         }
     }
