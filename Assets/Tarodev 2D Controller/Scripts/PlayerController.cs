@@ -578,9 +578,10 @@ namespace TarodevController
                 _constantForce.force = Vector2.zero;
                 if (IsGrabbingWall)
                 {
-                    wallVelocity = Mathf.MoveTowards(Velocity.y, _frameInput.Move.y * Stats.WallClimbSpeed,
-                        Stats.WallFallAcceleration * _delta);
-                    SetVelocity(new Vector2(0f, wallVelocity));
+                    _rb.gravityScale = 0f;
+                    /*wallVelocity = Mathf.MoveTowards(Velocity.y, _frameInput.Move.y * Stats.WallClimbSpeed,
+                        Stats.WallFallAcceleration * _delta);*/
+                    SetVelocity(new Vector2(0f, _frameInput.Move.y * Stats.WallClimbSpeed));
                     return;
                 }
                 
