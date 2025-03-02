@@ -736,6 +736,20 @@ namespace TarodevController
         }
 
         #endregion
+        
+        private void OnEnable()
+        {
+            _swimColliderWrapper.OnTriggerEnter += OnWaterEnter;
+            _swimColliderWrapper.OnTriggerExit += OnWaterLeave;
+            _deathColliderWrapper.OnTriggerEnter += OnDeathEnter;
+        }
+
+        private void OnDisable()
+        {
+            _swimColliderWrapper.OnTriggerEnter -= OnWaterEnter;
+            _swimColliderWrapper.OnTriggerExit -= OnWaterLeave;
+            _deathColliderWrapper.OnTriggerEnter -= OnDeathEnter;
+        }
 
         #region Gizmos
 
