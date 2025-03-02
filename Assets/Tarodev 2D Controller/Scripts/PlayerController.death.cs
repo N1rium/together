@@ -1,7 +1,14 @@
-﻿namespace TarodevController
+﻿using UnityEngine;
+
+namespace TarodevController
 {
-    public class PlayerController_death
+    public partial class PlayerController
     {
-        
+        [SerializeField] private ColliderWrapper _deathColliderWrapper;
+
+        private void OnDeathEnter(Collider2D other)
+        {
+            Debug.Log("DEATH");
+        }
     }
 }
