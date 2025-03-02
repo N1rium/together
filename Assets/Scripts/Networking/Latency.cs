@@ -28,6 +28,7 @@ namespace Networking
 
         public float GetPing()
         {
+            if (NetworkManager.Singleton == null) return 0f;
             return NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetCurrentRtt(NetworkManager.Singleton
                 .NetworkConfig.NetworkTransport.ServerClientId);
         }
