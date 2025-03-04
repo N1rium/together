@@ -21,8 +21,8 @@ namespace TarodevController
 
         private bool HasBufferedJump => _bufferedJumpUsable && _time < _timeJumpWasPressed + Stats.BufferedJumpTime && !IsWithinJumpClearance;
         private bool CanUseCoyote => _coyoteUsable && !_grounded && _time < _timeLeftGrounded + Stats.CoyoteTime;
-        private bool CanAirJump => !_grounded && _airJumpsRemaining > 0;
-        private bool CanWallJump => !_grounded && ((_isOnWall || _wallDirThisFrame != 0) || (_wallJumpCoyoteUsable && _time < _timeLeftWall + Stats.WallCoyoteTime));
+        private bool CanAirJump => !_grounded && !_dashing && _airJumpsRemaining > 0;
+        private bool CanWallJump => !_grounded && !_dashing && ((_isOnWall || _wallDirThisFrame != 0) || (_wallJumpCoyoteUsable && _time < _timeLeftWall + Stats.WallCoyoteTime));
 
         private void CalculateJump()
         {
