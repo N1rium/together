@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0ce135eb2fe6874cb3c402f13d306c2, type: 3}
+  m_Name: Player Stats  Test 1
+  m_EditorClassIdentifier: 
+  PlayerLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  CollisionLayers:
+    serializedVersion: 2
+    m_Bits: 769
+  CharacterSize:
+    Height: 1.35
+    Width: 0.975
+    StepHeight: 0.25
+    CrouchHeight: 0.8
+    RayInset: 0.01
+  VerticalDeadZoneThreshold: 0.3
+  HorizontalDeadZoneThreshold: 0.1
+  PositionCorrectionMode: 0
+  MaxFallSpeed: 15
+  BaseSpeed: 10
+  Acceleration: 80
+  Friction: 150
+  AirFrictionMultiplier: 0.5
+  DirectionCorrectionMultiplier: 3
+  MaxWalkableSlope: 46
+  ExtraConstantGravity: 40
+  BufferedJumpTime: 0.15
+  CoyoteTime: 0.15
+  JumpPower: 16.5
+  EndJumpEarlyExtraForceMultiplier: 3.2
+  MaxAirJumps: 1
+  AllowDash: 1
+  DashVelocity: 4
+  DashDuration: 0.18
+  DashCooldown: 0.5
+  DashEndHorizontalMultiplier: 0.5
+  AllowCrouching: 1
+  CrouchSlowDownTime: 0.5
+  CrouchSpeedModifier: 0.3
+  AllowWalls: 1
+  ClimbableLayer:
+    serializedVersion: 2
+    m_Bits: 257
+  WallJumpTotalInputLossTime: 0.2
+  WallJumpInputLossReturnTime: 0.5
+  RequireInputPush: 1
+  WallJumpPower: {x: 16.65, y: 15}
+  WallPushPower: {x: 16.65, y: 15}
+  WallGrabPower: {x: 0, y: 15}
+  WallClimbSpeed: 5
+  WallFallAcceleration: 75
+  WallPopForce: 10
+  WallCoyoteTime: 0.3
+  WallDetectorRange: 0.1
+  AllowLadders: 0
+  LadderCooldownTime: 0.15
+  AutoAttachToLadders: 1
+  SnapToLadders: 1
+  LadderLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  LadderSnapTime: 0.05
+  LadderPopForce: 5
+  LadderClimbSpeed: 8
+  LadderSlideSpeed: 12
+  LadderShimmySpeedMultiplier: 0.1
+  NegativeYVelocityNegation: 0.2
+  ExternalVelocityDecayRate: 0.5
+  AllowSwimming: 1
+  WaterLayer:
+    serializedVersion: 2
+    m_Bits: 16
+  SwimSpeed: 4
+  SwimDamping: 10
+  SwimDashPower: 10
