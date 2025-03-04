@@ -546,6 +546,13 @@ namespace TarodevController
 
         private void Move()
         {
+            if (_dashing)
+            {
+                _constantForce.force = Vector2.zero;
+                _rb.gravityScale = 0f;
+                return;
+            }
+            
             if (_forceToApplyThisFrame != Vector2.zero)
             {
                 _rb.linearVelocity += AdditionalFrameVelocities();
@@ -565,11 +572,6 @@ namespace TarodevController
                 return;
             }
 
-            if (_dashing)
-            {
-                SetVelocity(_dashVel);
-                return;
-            }
             
             if (_isOnWall)
             {
