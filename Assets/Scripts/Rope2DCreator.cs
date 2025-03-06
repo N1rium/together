@@ -42,7 +42,7 @@ public class Rope2DCreator : MonoBehaviour
             rb.linearDamping = 2f;
             rb.freezeRotation = true;
 
-            dj.autoConfigureDistance = true;
+            dj.autoConfigureDistance = false;
             dj.maxDistanceOnly = true;
             
             segments[i] = currJoint.transform;
