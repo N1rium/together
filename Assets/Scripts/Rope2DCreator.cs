@@ -34,7 +34,9 @@ public class Rope2DCreator : MonoBehaviour
 
         for (var i = 0; i < numSegments; i++)
         {
-            var currJoint = Instantiate(new GameObject("JointNode"), GetSegmentPosition(i), Quaternion.identity, transform);
+            var currJoint = new GameObject("JointNode");
+            currJoint.transform.SetParent(transform);
+            currJoint.transform.position = GetSegmentPosition(i);
             var rb = currJoint.gameObject.AddComponent<Rigidbody2D>();
             var dj = currJoint.AddComponent<DistanceJoint2D>();
 
@@ -50,11 +52,13 @@ public class Rope2DCreator : MonoBehaviour
             if (i == 0)
             {
                 dj.connectedAnchor = Vector2.zero;
-                dj.distance = 0f;
+                dj.distance = 0.1f;
                 dj.connectedBody = GetComponent<Rigidbody2D>();
                 continue;
             }
-            
+
+            dj.distance = Vector3.Distance(segments[i].transform.position, segments[i - 1].transform.position);
+
             var prevIndex = i - 1;
             dj.connectedBody = segments[prevIndex].GetComponent<Rigidbody2D>();
 
