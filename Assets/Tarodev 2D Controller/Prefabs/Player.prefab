@@ -19925,6 +19925,7 @@ MonoBehaviour:
   <Stats>k__BackingField: {fileID: 11400000, guid: 894dfe33661263b42a8e1490d64c0424, type: 2}
   _drawGizmos: 1
   _deathColliderWrapper: {fileID: 0}
+  _interactColliderWrapper: {fileID: 0}
   _swimColliderWrapper: {fileID: 0}
 --- !u!50 &3054942120541986088
 Rigidbody2D:

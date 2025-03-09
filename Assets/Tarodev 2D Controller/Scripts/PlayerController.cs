@@ -100,6 +100,9 @@ namespace TarodevController
             _time = time;
 
             GatherInput();
+            
+            // Handle interactable in Update to not lose frames
+            CalculateInteraction();
         }
 
         public void TickFixedUpdate(float delta)
@@ -114,7 +117,7 @@ namespace TarodevController
 
             CalculateCollisions();
             CalculateDirection();
-
+            
             CalculateSwim();
             CalculateWalls();
             CalculateLadders();
@@ -187,8 +190,7 @@ namespace TarodevController
         private void GatherInput()
         {
             _frameInput = _playerInput.Gather();
-
-
+            
             if (_frameInput.JumpDown)
             {
                 _jumpToConsume = true;
