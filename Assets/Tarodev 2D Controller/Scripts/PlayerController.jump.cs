@@ -91,7 +91,7 @@ namespace TarodevController
                         power = Stats.WallJumpPower;
                         jumpDir = (int)_frameDirection.x;
                     }
-                    AddFrameForce(new Vector2(jumpDir, 1) * power);
+                    AddFrameForce(new Vector2(jumpDir, 1) * power, true);
                     /*AddFrameForce(new Vector2(-_wallDirThisFrame, 1) * Stats.WallPushPower);*/
                 }
             }
