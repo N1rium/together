@@ -1,4 +1,5 @@
 using System;
+using Rooms;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -37,6 +38,11 @@ public class PlayerCamera : MonoBehaviour
         if (_collider == other) return;
         _confiner.BoundingShape2D = other;
         _collider = other;
+        
+        if (other.transform.TryGetComponent(out RoomConfiner con))
+        {
+            con.OnEnter?.Invoke(this);
+        }
     }
     
     private void OnPlayerTriggerExit(Collider2D other)
@@ -45,5 +51,12 @@ public class PlayerCamera : MonoBehaviour
         if (_collider != other) return;
         _confiner.BoundingShape2D = null;
         _collider = null;
+        
+        if (other.transform.TryGetComponent(out RoomConfiner con))
+        {
+            con.OnExit?.Invoke(this);
+        }
     }
+
+    public CinemachineCamera GetCamera() => _cam;
 }
