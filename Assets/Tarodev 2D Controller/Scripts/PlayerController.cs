@@ -410,20 +410,19 @@ namespace TarodevController
         private float _currentWallSpeedVel;
         private float _canGrabWallAfter;
         private int _wallDirThisFrame;
-        private bool _hasWallInFront;
+        private RaycastHit2D _wallHit;
 
         private bool HorizontalInputPressed => Mathf.Abs(_frameInput.Move.x) > Stats.HorizontalDeadZoneThreshold;
         private bool IsPushingAgainstWall => HorizontalInputPressed && (int)Mathf.Sign(_frameDirection.x) == _wallDirThisFrame;
-        public bool IsGrabbingWall => !_grounded && CanStand && _frameInput.GrabHeld && _hasWallInFront;
+        public bool IsGrabbingWall => !_grounded && CanStand && _frameInput.GrabHeld && _wallHit;
 
         private void CalculateWalls()
         {
             if (!Stats.AllowWalls) return;
             
-
             var rayDir = _isOnWall ? WallDirection : _frameDirection.x;
             var hasHitWall = DetectWallCast(rayDir);
-            _hasWallInFront = DetectWallCast(_lastFrameDirection.x); // TODO - Try to avoid two BoxCasts
+            _wallHit = DetectWallCastHit(_lastFrameDirection.x); // TODO - Try to avoid two BoxCasts
 
             _wallDirThisFrame = hasHitWall ? (int)rayDir : 0;
 
@@ -447,6 +446,12 @@ namespace TarodevController
         }
 
         private bool DetectWallCast(float dir)
+        {
+            return Physics2D.BoxCast(_framePosition + (Vector2)_wallDetectionBounds.center, new Vector2(_character.StandingColliderSize.x - SKIN_WIDTH, _wallDetectionBounds.size.y), 0, new Vector2(dir, 0), Stats.WallDetectorRange,
+                Stats.ClimbableLayer);
+        }
+
+        private RaycastHit2D DetectWallCastHit(float dir)
         {
             return Physics2D.BoxCast(_framePosition + (Vector2)_wallDetectionBounds.center, new Vector2(_character.StandingColliderSize.x - SKIN_WIDTH, _wallDetectionBounds.size.y), 0, new Vector2(dir, 0), Stats.WallDetectorRange,
                 Stats.ClimbableLayer);
@@ -496,7 +501,6 @@ namespace TarodevController
         private void TraceGround()
         {
             IPhysicsMover currentPlatform = null;
-
             if (_grounded && !IsWithinJumpClearance)
             {
                 // Use transient velocity to keep grounded. Move position is not interpolated
@@ -514,7 +518,18 @@ namespace TarodevController
                 {
                     _activatedMovers.Add(currentPlatform);
                 }
+            } 
+            // TODO - Try to get wall grabbing to work with movables
+            /*
+            else if (IsGrabbingWall)
+            {
+                if (_wallHit.transform.TryGetComponent(out currentPlatform))
+                {
+                    _activatedMovers.Add(currentPlatform);
+                }
             }
+            */
+            
 
             if (_lastPlatform != currentPlatform)
             {
