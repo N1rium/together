@@ -759,6 +759,8 @@ namespace TarodevController
             _swimColliderWrapper.OnTriggerEnter += OnWaterEnter;
             _swimColliderWrapper.OnTriggerExit += OnWaterLeave;
             _deathColliderWrapper.OnTriggerEnter += OnDeathEnter;
+            _interactColliderWrapper.OnTriggerEnter += OnInteractableEnter;
+            _interactColliderWrapper.OnTriggerExit += OnInteractableLeave;
         }
 
         private void OnDisable()
@@ -766,6 +768,8 @@ namespace TarodevController
             _swimColliderWrapper.OnTriggerEnter -= OnWaterEnter;
             _swimColliderWrapper.OnTriggerExit -= OnWaterLeave;
             _deathColliderWrapper.OnTriggerEnter -= OnDeathEnter;
+            _interactColliderWrapper.OnTriggerEnter -= OnInteractableEnter;
+            _interactColliderWrapper.OnTriggerExit -= OnInteractableLeave;
         }
 
         #region Gizmos
