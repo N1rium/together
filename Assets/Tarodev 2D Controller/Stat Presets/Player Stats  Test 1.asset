@@ -20,7 +20,7 @@ MonoBehaviour:
     m_Bits: 769
   CharacterSize:
     Height: 1.35
-    Width: 0.975
+    Width: 0.925
     StepHeight: 0.25
     CrouchHeight: 0.8
     RayInset: 0.01
