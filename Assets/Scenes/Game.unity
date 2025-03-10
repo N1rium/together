@@ -59188,7 +59188,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0867f43889af6db499f5a463524c3095, type: 2}
+  - {fileID: 2100000, guid: bd68d15a0c113514fa559069f2704608, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -60404,7 +60404,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   RotationModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -60514,7 +60514,7 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.7853982
+      scalar: 6.283185
       minScalar: 0.7853982
       maxCurve:
         serializedVersion: 2
@@ -64050,8 +64050,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d3e6d3f3ef9b2d48b9a26c7a62efc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ps: {fileID: 0}
-  subPs: {fileID: 0}
+  ps: {fileID: 1139414780}
+  subPs: {fileID: 848489274}
 --- !u!1 &1161745406
 GameObject:
   m_ObjectHideFlags: 0

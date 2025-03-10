@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class DeathParticles : MonoBehaviour
@@ -10,6 +11,9 @@ public class DeathParticles : MonoBehaviour
     void Start()
     {
         _emission = ps.emission;
+
+        Delay.For(1f).OnComplete(() => Spawn(transform.position, Color.cyan));
+        Delay.For(2f).OnComplete(() => Spawn(transform.position, Color.yellow));
     }
 
     public void Spawn(Vector3 worldPos, Color color)
