@@ -7,12 +7,6 @@ namespace Rooms
     {
         public bool enableWithRoom = true;
 
-        private void Awake()
-        {
-            if (!enableWithRoom) return;
-            gameObject.SetActive(false);
-        }
-
         public void OnRoomEnter(RoomData data)
         {
             if (!enableWithRoom) return;

@@ -41,6 +41,7 @@ namespace Networking
                 Nickname.Value = _multiplayerManager.PlayerName;
                 Color.Value = _multiplayerManager.Color;
                 RegisterPlayerEvents();
+                nicknameText.color = new Color(0, 0, 0, 0);
             }
             else
             {
