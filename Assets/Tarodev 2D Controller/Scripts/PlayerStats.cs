@@ -91,6 +91,9 @@ namespace TarodevController
         public float SwimSpeed = 4f;
         public float SwimDamping = 10f;
         public float SwimDashPower = 10f;
+        
+        [Header("Death"), Space]
+        public bool AllowDeath = true;
 
         private void OnValidate()
         {

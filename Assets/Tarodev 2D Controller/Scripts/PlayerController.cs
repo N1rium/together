@@ -32,6 +32,7 @@ namespace TarodevController
         public event Action<bool> ToggledPlayer;
         public event Action<bool> SwimmingChanged;
         public event Action<bool> CrouchingChanged;
+        public event Action<bool> DeathChanged;
         public bool Active { get; private set; } = true;
         public Vector2 Up { get; private set; }
         public Vector2 Right { get; private set; }
@@ -82,6 +83,7 @@ namespace TarodevController
 
         private void Awake()
         {
+            SetCheckpoint(transform.position);
             if (!TryGetComponent(out _playerInput)) _playerInput = gameObject.AddComponent<PlayerInput>();
             if (!TryGetComponent(out _constantForce)) _constantForce = gameObject.AddComponent<ConstantForce2D>();
 
@@ -99,8 +101,8 @@ namespace TarodevController
             _delta = delta;
             _time = time;
 
+            CalculateDeath();
             GatherInput();
-            
             // Handle interactable in Update to not lose frames
             CalculateInteraction();
         }
