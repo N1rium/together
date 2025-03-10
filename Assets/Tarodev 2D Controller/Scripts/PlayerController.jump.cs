@@ -91,6 +91,10 @@ namespace TarodevController
                         power = Stats.WallJumpPower;
                         jumpDir = (int)_frameDirection.x;
                     }
+
+                    // Fix for not getting ultra-boost when exiting wall + jumping
+                    _forceToApplyThisFrame = Vector2.zero;
+                    
                     AddFrameForce(new Vector2(jumpDir, 1) * power, true);
                     /*AddFrameForce(new Vector2(-_wallDirThisFrame, 1) * Stats.WallPushPower);*/
                 }
