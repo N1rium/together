@@ -76,7 +76,7 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Time: 1
   m_PreviewTimeScale: 1
   m_Parameters:
@@ -181,7 +181,7 @@ Transform:
   m_GameObject: {fileID: 140132916218502597}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.25, y: -52.25, z: 0}
+  m_LocalPosition: {x: -51.5, y: 16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -304,7 +304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _airborneCollider: {fileID: 1168141624914108346}
-  <Stats>k__BackingField: {fileID: 11400000, guid: 7da9a0ba9bf66f84f8f7b21070b5fd5c, type: 2}
+  <Stats>k__BackingField: {fileID: 11400000, guid: 08b2937a72e50db41bc64417d65ee605, type: 2}
   _drawGizmos: 1
   _deathColliderWrapper: {fileID: 1038076840113668306}
   _interactColliderWrapper: {fileID: 8149341878716730229}
@@ -1038,7 +1038,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3708426805261066441
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1225,7 +1225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5694429049563510388
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15981,9 +15981,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5593739594029994204}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 200, y: 20}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &5185143660935082494
@@ -25900,9 +25900,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5593739594029994204}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: -100}
   m_SizeDelta: {x: 200, y: 20}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &853646468239041807
@@ -26068,9 +26068,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5593739594029994204}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: -75}
   m_SizeDelta: {x: 200, y: 20}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &6445339019332224785
@@ -41631,7 +41631,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a4d7a7ebbc7e0ce4ba9ad48f23e4ba70, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
