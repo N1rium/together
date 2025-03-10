@@ -464,6 +464,17 @@ namespace TarodevController
                 },
                 {
                     ""name"": """",
+                    ""id"": ""699b50ef-79d7-478e-b899-e7491ae55ccd"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Grab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""ef80723f-58d6-4d7a-84e8-f8d50a9c46e6"",
                     ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
