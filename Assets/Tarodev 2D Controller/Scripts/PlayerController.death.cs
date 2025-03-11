@@ -7,14 +7,12 @@ namespace TarodevController
     {
         [SerializeField] private ColliderWrapper _deathColliderWrapper;
         private Vector3 _checkpoint;
-
-        private void CalculateDeath()
-        {
-            if (!Stats.AllowDeath) return;
-        }
-
+        private bool CanDie => !_isNoclip;
+        
+        
         private void Die()
         {
+            if (!CanDie) return;
             RepositionImmediately(transform.position, true);
             TogglePlayer(false);
             DeathChanged?.Invoke(true);

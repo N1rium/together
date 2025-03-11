@@ -85,3 +85,5 @@ MonoBehaviour:
   SwimDamping: 10
   SwimDashPower: 10
   AllowDeath: 1
+  AllowNoclip: 1
+  NoclipSpeed: 20

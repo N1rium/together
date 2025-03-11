@@ -173,6 +173,15 @@ namespace TarodevController
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Noclip"",
+                    ""type"": ""Button"",
+                    ""id"": ""21f58c94-6749-4dd7-a437-5d998f9dd2e0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -494,6 +503,17 @@ namespace TarodevController
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f35766e9-2a1f-438f-a2a2-58888b798a3f"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Noclip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -572,6 +592,7 @@ namespace TarodevController
             m_Player_Vertical = m_Player.FindAction("Vertical", throwIfNotFound: true);
             m_Player_Grab = m_Player.FindAction("Grab", throwIfNotFound: true);
             m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+            m_Player_Noclip = m_Player.FindAction("Noclip", throwIfNotFound: true);
         }
 
         ~@PlayerInputActions()
@@ -661,6 +682,7 @@ namespace TarodevController
         private readonly InputAction m_Player_Vertical;
         private readonly InputAction m_Player_Grab;
         private readonly InputAction m_Player_Interact;
+        private readonly InputAction m_Player_Noclip;
         /// <summary>
         /// Provides access to input actions defined in input action map "Player".
         /// </summary>
@@ -708,6 +730,10 @@ namespace TarodevController
             /// Provides access to the underlying input action "Player/Interact".
             /// </summary>
             public InputAction @Interact => m_Wrapper.m_Player_Interact;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/Noclip".
+            /// </summary>
+            public InputAction @Noclip => m_Wrapper.m_Player_Noclip;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -761,6 +787,9 @@ namespace TarodevController
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
+                @Noclip.started += instance.OnNoclip;
+                @Noclip.performed += instance.OnNoclip;
+                @Noclip.canceled += instance.OnNoclip;
             }
 
             /// <summary>
@@ -799,6 +828,9 @@ namespace TarodevController
                 @Interact.started -= instance.OnInteract;
                 @Interact.performed -= instance.OnInteract;
                 @Interact.canceled -= instance.OnInteract;
+                @Noclip.started -= instance.OnNoclip;
+                @Noclip.performed -= instance.OnNoclip;
+                @Noclip.canceled -= instance.OnNoclip;
             }
 
             /// <summary>
@@ -967,6 +999,13 @@ namespace TarodevController
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnInteract(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Noclip" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnNoclip(InputAction.CallbackContext context);
         }
     }
 }

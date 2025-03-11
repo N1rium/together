@@ -100,11 +100,13 @@ namespace TarodevController
         {
             _delta = delta;
             _time = time;
-
-            CalculateDeath();
+            
             GatherInput();
             // Handle interactable in Update to not lose frames
             CalculateInteraction();
+
+            // Handle noclip in Update to not lose frames
+            CalculateNoclip();
         }
 
         public void TickFixedUpdate(float delta)
@@ -117,18 +119,22 @@ namespace TarodevController
 
             SetFrameData();
 
-            CalculateCollisions();
-            CalculateDirection();
+            if (!_isNoclip)
+            {
+                CalculateCollisions();
+                CalculateDirection();
+                
+                CalculateSwim();
+                CalculateWalls();
+                CalculateLadders();
+                CalculateJump();
+                CalculateDash();
+
+                CalculateExternalModifiers();
+
+                TraceGround();
+            }
             
-            CalculateSwim();
-            CalculateWalls();
-            CalculateLadders();
-            CalculateJump();
-            CalculateDash();
-
-            CalculateExternalModifiers();
-
-            TraceGround();
             Move();
 
             CalculateCrouch();
@@ -562,9 +568,15 @@ namespace TarodevController
             if (platformVel.y < 0) platformVel.y *= Stats.NegativeYVelocityNegation;
             _decayingTransientVelocity += platformVel;
         }
-
+        
         private void Move()
         {
+            if (_isNoclip)
+            {
+                MoveNoclip();
+                return;
+            }
+            
             if (_forceToApplyThisFrame != Vector2.zero)
             {
                 _rb.linearVelocity += AdditionalFrameVelocities();

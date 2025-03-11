@@ -95,6 +95,10 @@ namespace TarodevController
         [Header("Death"), Space]
         public bool AllowDeath = true;
 
+        [Header("Noclip"), Space]
+        public bool AllowNoclip = true;
+        public float NoclipSpeed = 5f;
+        
         private void OnValidate()
         {
             var potentialPlayer = FindObjectsOfType<PlayerController>();
