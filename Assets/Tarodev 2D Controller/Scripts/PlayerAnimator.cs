@@ -50,6 +50,8 @@ namespace TarodevController
 
         private bool _isNpc;
 
+        public event Action<Vector3, Color> OnDeath;
+
         private void Awake()
         {
             _source = GetComponent<AudioSource>();
@@ -81,6 +83,7 @@ namespace TarodevController
             _playerActions.ToggledPlayer += PlayerOnToggledPlayer;
             _playerActions.SwimmingChanged += OnSwimmingChanged;
             _playerActions.CrouchingChanged += CrouchingChanged;
+            _playerActions.DeathChanged += OnPlayerDeath;
 
             _moveParticles.Play();
         }
@@ -95,8 +98,15 @@ namespace TarodevController
             _playerActions.ToggledPlayer -= PlayerOnToggledPlayer;
             _playerActions.SwimmingChanged -= OnSwimmingChanged;
             _playerActions.CrouchingChanged -= CrouchingChanged;
+            _playerActions.DeathChanged -= OnPlayerDeath;
 
             _moveParticles.Stop();
+        }
+
+        private void OnPlayerDeath(bool isDead)
+        {
+            if (!isDead) return;
+            OnDeath?.Invoke(transform.position, _moveParticles.main.startColor.color);
         }
 
         public void SetNpc(bool val) => _isNpc = val;
@@ -497,7 +507,6 @@ namespace TarodevController
 
         public void SetPlayerParticleColors(Color c)
         {
-            Debug.Log($"SETTING COLOR: {c.ToString()}");
             var grad = new ParticleSystem.MinMaxGradient(c);
             var targets = new[] { _moveParticles, _dashParticles, _jumpParticles, _doubleJumpParticles, _launchParticles, _wallSlideParticles };
             foreach (var target in targets)
@@ -512,6 +521,8 @@ namespace TarodevController
             var main = ps.main;
             main.startColor = _currentGradient;
         }
+
+        public Color GetColor() => _moveParticles.main.startColor.color;
 
         private void PlayRandomSound(IReadOnlyList<AudioClip> clips, float volume = 1, float pitch = 1)
         {

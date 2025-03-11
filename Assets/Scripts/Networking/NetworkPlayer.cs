@@ -227,6 +227,8 @@ namespace Networking
         public event Action<bool> ToggledPlayer;
         public event Action<bool> SwimmingChanged;
         public event Action<bool> CrouchingChanged;
+        public event Action<bool> DeathChanged;
+
         public GeneratedCharacterSize GeneratedCharacterSize()
         {
             return playerController.Stats.CharacterSize.GenerateCharacterSize();

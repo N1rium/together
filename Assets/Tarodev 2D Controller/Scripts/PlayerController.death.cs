@@ -9,14 +9,12 @@ namespace TarodevController
         private Vector3 _checkpoint;
         private bool CanDie => !_isNoclip;
         
-        
         private void Die()
         {
             if (!CanDie) return;
             RepositionImmediately(transform.position, true);
             TogglePlayer(false);
             DeathChanged?.Invoke(true);
-
             Delay.For(1f).OnComplete(Respawn);
         }
 
@@ -29,6 +27,7 @@ namespace TarodevController
         {
             RepositionImmediately(_checkpoint, true);
             TogglePlayer(true);
+            DeathChanged?.Invoke(false);
         }
 
         public void SetCheckpoint(Vector3 pos)
