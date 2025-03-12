@@ -1,25 +1,19 @@
 using System;
-using System.Diagnostics;
-using DG.Tweening;
-using Networking;
 using Unity.Netcode;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
-public class MovingPlatform : NetworkBehaviour
+public class MovingPlatform : MonoBehaviour
 {
-    public Vector3 startPosition;
-    public Vector3 endPosition;
-    public float duration = 5f;
-
-    public override void OnNetworkSpawn()
+    private Vector3 startPos;
+    private void Start()
     {
-        if (IsServer)
-        {
-            transform.DOMove(endPosition, duration)
-                .From(startPosition)
-                .SetEase(Ease.Linear)
-                .SetLoops(-1, LoopType.Yoyo);
-        }
+        startPos = transform.position;
+    }
+
+    public void Update()
+    {
+        // Move up and down by 5 meters and change direction every 3 seconds.
+        var positionY = Mathf.PingPong(NetworkManager.Singleton.LocalTime.TimeAsFloat / 3f, 1f) * 5f;
+        transform.position = startPos + new Vector3(0, positionY, 0);
     }
 }
