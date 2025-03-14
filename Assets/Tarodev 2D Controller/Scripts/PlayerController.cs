@@ -598,7 +598,6 @@ namespace TarodevController
 
             if (_dashing)
             {
-                SetVelocity(_dashVel);
                 return;
             }
             
@@ -797,6 +796,8 @@ namespace TarodevController
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(pos + Vector2.up * _character.Height / 2, new Vector3(_character.Width, _character.Height));
             Gizmos.color = Color.magenta;
+            
+            /*Gizmos.DrawLine(transform.position, ((Vector2)transform.position + _frameDirection));*/
             
             /*Gizmos.DrawCube(pos + Vector2.up * 0.75f, Vector2.one * 0.5f);*/
 

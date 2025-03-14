@@ -42,7 +42,7 @@ MonoBehaviour:
   MaxAirJumps: 1
   AllowDash: 1
   DashVelocity: 4
-  DashDuration: 0.18
+  DashDuration: 0.25
   DashCooldown: 0.5
   DashEndHorizontalMultiplier: 0.5
   AllowCrouching: 1

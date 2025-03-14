@@ -441,6 +441,10 @@ namespace TarodevController
                 _dashRingTransform.up = dir;
                 _dashRingParticles.Play();
                 _source.PlayOneShot(_dashClip,0.5f);
+                transform.DOScale(0.8f, 0.1f).OnComplete(() =>
+                {
+                    transform.DOScale(1f, 0.5f).From(0.8f).SetEase(Ease.OutBack);
+                });
             }
             else
             {
