@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Weather;
 
 namespace Rooms
 {
@@ -9,9 +10,12 @@ namespace Rooms
     {
         [SerializeField] private RoomConfiner _confiner;
         [SerializeField] private float orthoSize = 10f;
+        [SerializeField] private List<WeatherCondition> weathers;
 
         private List<RoomObject> _roomObjects = new();
         private float _orthoSize;
+
+        public event Action<Room> OnEnter, OnExit;
 
         private void Start()
         {
@@ -34,6 +38,7 @@ namespace Rooms
         private void OnConfinerEnter(PlayerCamera cam)
         {
             cam.GetCamera().Lens.OrthographicSize = orthoSize;
+            OnEnter?.Invoke(this);
             foreach (var ro in _roomObjects)
             {
                 ro.OnRoomEnter(new()
@@ -47,6 +52,7 @@ namespace Rooms
         private void OnConfinerExit(PlayerCamera cam)
         {
             cam.GetCamera().Lens.OrthographicSize = _orthoSize;
+            OnExit?.Invoke(this);
             foreach (var ro in _roomObjects)
             {
                 ro.OnRoomExit(new()
@@ -56,6 +62,8 @@ namespace Rooms
                 });
             }
         }
+
+        public List<WeatherCondition> GetWeathers() => weathers;
     }
 
     // Data passed down to all IRoomObjects in each room
