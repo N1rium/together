@@ -281,7 +281,7 @@
     },
     "m_PreviewData": {
         "serializedMesh": {
-            "m_SerializedMesh": "{\"mesh\":{\"instanceID\":0}}",
+            "m_SerializedMesh": "{\"mesh\":{\"fileID\":10210,\"guid\":\"0000000000000000e000000000000000\",\"type\":0}}",
             "m_Guid": ""
         },
         "preventRotation": false
@@ -1192,10 +1192,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -746.2265014648438,
-            "y": 738.2597045898438,
-            "width": 0.0,
-            "height": 0.0
+            "x": -929.9999389648438,
+            "y": 329.9999694824219,
+            "width": 128.0,
+            "height": 34.0
         }
     },
     "m_Slots": [
@@ -1531,7 +1531,7 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "m_SerializedTexture": "",
+        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"d0a6f137b6d9ab9489e9866e2e195704\",\"type\":3}}",
         "m_Guid": ""
     },
     "isMainTexture": false,
@@ -1742,10 +1742,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -583.9999389648438,
-            "y": 945.9999389648438,
-            "width": 109.99996948242188,
-            "height": 34.0
+            "x": -395.9999694824219,
+            "y": 946.0,
+            "width": 110.00003051757813,
+            "height": 33.99993896484375
         }
     },
     "m_Slots": [
@@ -2036,10 +2036,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -523.9999389648438,
-            "y": 612.9999389648438,
-            "width": 182.99996948242188,
-            "height": 250.99993896484376
+            "x": -656.9999389648438,
+            "y": 379.9999694824219,
+            "width": 183.0,
+            "height": 251.00003051757813
         }
     },
     "m_Slots": [
