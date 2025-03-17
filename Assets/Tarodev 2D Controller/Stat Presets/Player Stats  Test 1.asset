@@ -41,7 +41,9 @@ MonoBehaviour:
   EndJumpEarlyExtraForceMultiplier: 3.2
   MaxAirJumps: 1
   AllowDash: 1
-  DashVelocity: 4
+  DashLength: 5
+  DashCollisionForce: 20
+  DashEndPopForce: 10
   DashDuration: 0.25
   DashCooldown: 0.5
   DashEndHorizontalMultiplier: 0.5
@@ -62,7 +64,7 @@ MonoBehaviour:
   WallFallAcceleration: 75
   WallPopForce: 10
   WallCoyoteTime: 0.3
-  WallDetectorRange: 0.1
+  WallDetectorRange: 0.1275
   AllowLadders: 0
   LadderCooldownTime: 0.15
   AutoAttachToLadders: 1
