@@ -339,7 +339,6 @@ namespace TarodevController
                 SetVelocity(_trimmedFrameVelocity);
                 _constantForce.force = Vector2.zero;
                 _currentStepDownLength = _character.StepHeight;
-                _canDash = true;
                 _coyoteUsable = true;
                 _bufferedJumpUsable = true;
                 ResetAirJumps();
