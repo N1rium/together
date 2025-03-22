@@ -8,8 +8,6 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        Application.targetFrameRate = 120;
-        
         // TODO - Load active room and its neighbours
         var rooms = FindObjectsByType<Room>(FindObjectsSortMode.None);
         foreach (var room in rooms)
