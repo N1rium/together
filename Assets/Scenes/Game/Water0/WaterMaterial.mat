@@ -116,12 +116,12 @@ Material:
     - _Underwater_Refraction_Scale: 2
     - _Underwater_Refraction_Speed: 1
     m_Colors:
-    - _Bottom_Color: {r: 0.10588231, g: 0.34117642, b: 0.23921561, a: 1}
+    - _Bottom_Color: {r: 0.10588228, g: 0.3411764, b: 0.23921558, a: 1}
     - _Reflection_Warp_Scale: {r: 0.1, g: 1, b: 0, a: 0}
     - _Reflection_Warp_Speed: {r: 0.5, g: 2, b: 0, a: 0}
-    - _Render_Camera_Position: {r: 34, g: 31.5, b: 0, a: 0}
+    - _Render_Camera_Position: {r: -357.75, g: -12.999983, b: 0, a: 0}
     - _Render_Camera_Size: {r: 28.444445, g: 16, b: 0, a: 0}
     - _Surface_Line_Color: {r: 0.49411756, g: 0.772549, b: 0.58431375, a: 0}
-    - _Top_Color: {r: 0.28235295, g: 0.8196079, b: 0.62745106, a: 1}
+    - _Top_Color: {r: 0.28235292, g: 0.8196079, b: 0.62745106, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

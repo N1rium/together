@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.maguinho.2dvfx": "https://github.com/Magnno/Unity_2D_VFX.git",
+    "com.unity.2d.animation": "10.1.4",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.2d.tilemap.extras": "4.1.0",
