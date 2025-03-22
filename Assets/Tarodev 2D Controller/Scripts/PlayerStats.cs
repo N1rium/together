@@ -32,7 +32,7 @@ namespace TarodevController
         public float Friction = 30;
         public float AirFrictionMultiplier = 0.5f;
         public float DirectionCorrectionMultiplier = 3f;
-        public float MaxWalkableSlope = 50;
+        /*public float MaxWalkableSlope = 50;*/
 
         // Jump
         [Header("Jump"), Space] public float ExtraConstantGravity = 40;

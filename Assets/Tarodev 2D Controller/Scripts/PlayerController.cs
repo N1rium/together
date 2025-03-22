@@ -306,14 +306,16 @@ namespace TarodevController
             bool PerformRay(Vector2 point)
             {
                 _groundHit = Physics2D.Raycast(point, -Up, GrounderLength + _currentStepDownLength, Stats.CollisionLayers);
-                if (!_groundHit) return false;
+                return _groundHit;
+                // This was removed since we're not interested in slopes
+                /*if (!_groundHit) return false;
 
                 if (Vector2.Angle(_groundHit.normal, Up) > Stats.MaxWalkableSlope)
                 {
                     return false;
                 }
 
-                return true;
+                return true;*/
             }
         }
 
@@ -392,12 +394,13 @@ namespace TarodevController
         {
             _frameDirection = new Vector2(_frameInput.Move.x, 0);
 
-            if (_grounded)
+            // This was removed since we're not interested in slopes
+            /*if (_grounded)
             {
                 GroundNormal = _groundHit.normal;
                 var angle = Vector2.Angle(GroundNormal, Up);
                 if (angle < Stats.MaxWalkableSlope) _frameDirection.y = _frameDirection.x * -GroundNormal.x / GroundNormal.y;
-            }
+            }*/
 
             _frameDirection = _frameDirection.normalized;
             if (_frameDirection == Vector2.zero) return;
