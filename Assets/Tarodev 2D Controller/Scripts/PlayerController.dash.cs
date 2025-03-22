@@ -37,7 +37,7 @@ namespace TarodevController
                 _dashSequence = DOTween.Sequence();
                 
                 _dashSequence.Append(_rb.DOMove(_framePosition + _dashDir * Stats.DashLength, Stats.DashDuration)
-                    .SetEase(Ease.InQuad)
+                    .SetEase(Stats.DashEasingFunction)
                     .OnUpdate(() =>
                     {
                         if (_dashCollision == null) return;

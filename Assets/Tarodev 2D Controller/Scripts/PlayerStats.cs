@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -49,6 +50,7 @@ namespace TarodevController
         public float DashDuration = 0.2f;
         public float DashCooldown = 1.5f;
         public float DashEndHorizontalMultiplier = 0.5f;
+        public Ease DashEasingFunction = Ease.Linear;
 
         // Dash
         [Header("Crouch"), Space] public bool AllowCrouching;
