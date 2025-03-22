@@ -394,8 +394,8 @@ namespace TarodevController
                 // Only play particles when grounded (avoid coyote)
                 if (type is JumpType.Jump)
                 {
-                    /*SetColor(_jumpParticles);
-                    SetColor(_launchParticles);*/
+                    SetColor(_jumpParticles);
+                    SetColor(_launchParticles);
                     _jumpParticles.Play();
                 }
             }
