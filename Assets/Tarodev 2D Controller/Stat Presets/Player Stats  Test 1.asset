@@ -21,9 +21,9 @@ MonoBehaviour:
   CharacterSize:
     Height: 1.35
     Width: 0.9
-    StepHeight: 0.25
+    StepHeight: 0.1
     CrouchHeight: 0.8
-    RayInset: 0.01
+    RayInset: 0.005
   VerticalDeadZoneThreshold: 0.3
   HorizontalDeadZoneThreshold: 0.1
   PositionCorrectionMode: 0
@@ -47,6 +47,7 @@ MonoBehaviour:
   DashDuration: 0.25
   DashCooldown: 0.5
   DashEndHorizontalMultiplier: 0.5
+  DashEasingFunction: 1
   AllowCrouching: 1
   CrouchSlowDownTime: 0.5
   CrouchSpeedModifier: 0.3

@@ -119,7 +119,7 @@ namespace TarodevController
     public class CharacterSize
     {
         public const float STEP_BUFFER = 0.05f;
-        public const float COLLIDER_EDGE_RADIUS = 0.05f;
+        public const float COLLIDER_EDGE_RADIUS = 0f;
 
         [Range(0.1f, 10), Tooltip("How tall you are. This includes a collider and your step height.")]
         public float Height = 1.8f;
@@ -133,7 +133,7 @@ namespace TarodevController
         [Range(0.1f, 10), Tooltip("A percentage of your height stat which determines your height while crouching. A smaller crouch requires more step height sacrifice")]
         public float CrouchHeight = 0.6f;
         
-        [Range(0.01f, 0.2f), Tooltip("The outer buffer distance of the grounder rays. Reducing this too much can cause problems on slopes, too big and you can get stuck on the sides of drops.")]
+        [Range(0.005f, 0.2f), Tooltip("The outer buffer distance of the grounder rays. Reducing this too much can cause problems on slopes, too big and you can get stuck on the sides of drops.")]
         public float RayInset = 0.1f;
 
         public GeneratedCharacterSize GenerateCharacterSize()
