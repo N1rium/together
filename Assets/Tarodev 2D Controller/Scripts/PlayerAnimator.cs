@@ -84,6 +84,7 @@ namespace TarodevController
             _playerActions.SwimmingChanged += OnSwimmingChanged;
             _playerActions.CrouchingChanged += CrouchingChanged;
             _playerActions.DeathChanged += OnPlayerDeath;
+            _playerActions.Attacked += OnAttacked;
 
             _moveParticles.Play();
         }
@@ -99,6 +100,7 @@ namespace TarodevController
             _playerActions.SwimmingChanged -= OnSwimmingChanged;
             _playerActions.CrouchingChanged -= CrouchingChanged;
             _playerActions.DeathChanged -= OnPlayerDeath;
+            _playerActions.Attacked -= OnAttacked;
 
             _moveParticles.Stop();
         }
@@ -210,6 +212,11 @@ namespace TarodevController
         {
             _isOnWall = onWall;
             if(_isOnWall) PlaySound(_wallGrabClip, 0.5f);
+        }
+
+        private void OnAttacked()
+        {
+            // TODO - Feedback when attacking. Perhaps pass IWeapon or something as argument
         }
 
         private void OnSwimmingChanged(bool isSwimming)

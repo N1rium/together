@@ -304,6 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c89b8855ab650ac489f1f1b5f2a94751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackObj: {fileID: 0}
   _airborneCollider: {fileID: 1168141624914108346}
   <Stats>k__BackingField: {fileID: 11400000, guid: 08b2937a72e50db41bc64417d65ee605, type: 2}
   _drawGizmos: 1
