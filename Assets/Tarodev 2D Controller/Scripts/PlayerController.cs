@@ -703,7 +703,8 @@ namespace TarodevController
                 newVelocity = new Vector2(targetX, _rb.linearVelocity.y);
             }
 
-            SetVelocity((newVelocity + AdditionalFrameVelocities()) * _currentFrameSpeedModifier);
+            newVelocity += AdditionalFrameVelocities() * _currentFrameSpeedModifier;
+            SetVelocity(newVelocity);
 
             Vector2 AdditionalFrameVelocities()
             {

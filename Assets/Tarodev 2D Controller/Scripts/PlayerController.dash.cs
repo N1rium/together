@@ -26,7 +26,7 @@ namespace TarodevController
 
             if (!_dashToConsume || !_canDash || Crouching || !(_time > _nextDashTime)) return;
             
-            _dashDir = new Vector2(_frameInput.Move.x, _frameInput.Move.y).normalized;
+            _dashDir = new Vector2(_frameInput.Move.x, 0f).normalized;
             if (_dashDir == Vector2.zero) _dashDir = new Vector2(_lastFrameDirection.x, 0f).normalized;
 
             _dashDir = _dashDir.ToNearestDirection();
