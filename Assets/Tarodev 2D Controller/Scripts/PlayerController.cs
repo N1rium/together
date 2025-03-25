@@ -138,6 +138,7 @@ namespace TarodevController
             Move();
 
             CalculateCrouch();
+            CalculateAttack();
 
             CleanFrameData();
 
@@ -209,6 +210,11 @@ namespace TarodevController
             {
                 _dashToConsume = true;
             }
+
+            if (_frameInput.Attack)
+            {
+                _attackToConsume = true;
+            }
         }
 
         #endregion
@@ -261,6 +267,7 @@ namespace TarodevController
         {
             _jumpToConsume = false;
             _dashToConsume = false;
+            _attackToConsume = false;
             _forceToApplyThisFrame = Vector2.zero;
             _lastFrameY = Velocity.y;
         }

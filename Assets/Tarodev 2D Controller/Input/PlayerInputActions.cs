@@ -115,7 +115,7 @@ namespace TarodevController
                     ""name"": ""Dash"",
                     ""type"": ""Button"",
                     ""id"": ""4a78c075-3464-45ca-8581-812805a2fdf7"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -364,7 +364,7 @@ namespace TarodevController
                 {
                     ""name"": """",
                     ""id"": ""9f0d43e5-99cf-4f28-b11f-0407291c8b8c"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",

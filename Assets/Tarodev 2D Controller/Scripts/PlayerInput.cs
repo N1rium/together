@@ -10,7 +10,7 @@ namespace TarodevController
     {
 #if ENABLE_INPUT_SYSTEM
         private PlayerInputActions _actions;
-        private InputAction _move, _jump, _dash, _horizontal, _vertical, _grab, _interact, _noClip;
+        private InputAction _move, _jump, _dash, _horizontal, _vertical, _grab, _interact, _noClip, _attack;
 
         private void Awake()
         {
@@ -24,6 +24,7 @@ namespace TarodevController
             _grab = player.Grab;
             _interact = player.Interact;
             _noClip = player.Noclip;
+            _attack = player.Attack;
         }
 
         private void OnEnable() => _actions.Enable();
@@ -47,7 +48,8 @@ namespace TarodevController
                 GrabHeld = _grab.IsPressed(),
                 Interact = _interact.WasPressedThisFrame(),
                 Move = move,
-                NoClipDown = _noClip.WasPressedThisFrame()
+                NoClipDown = _noClip.WasPressedThisFrame(),
+                Attack = _attack.WasPressedThisFrame(),
             };
         }
         
@@ -75,5 +77,6 @@ namespace TarodevController
         public bool GrabHeld;
         public bool Interact;
         public bool NoClipDown;
+        public bool Attack;
     }
 }
