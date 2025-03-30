@@ -214,9 +214,12 @@ namespace TarodevController
             if(_isOnWall) PlaySound(_wallGrabClip, 0.5f);
         }
 
-        private void OnAttacked()
+        private void OnAttacked(Vector2 dir)
         {
-            // TODO - Feedback when attacking. Perhaps pass IWeapon or something as argument
+            transform.DOShakeScale(0.25f, Vector3.one * 0.1f * -1f, 10, 0f).OnComplete(() =>
+            {
+                transform.localScale = Vector3.one;
+            });
         }
 
         private void OnSwimmingChanged(bool isSwimming)

@@ -12,14 +12,14 @@ namespace Rooms
         [SerializeField] private float orthoSize = 10f;
         [SerializeField] private List<WeatherCondition> weathers;
 
-        private List<RoomObject> _roomObjects = new();
+        private List<IRoomObject> _roomObjects = new();
         private float _orthoSize;
 
         public event Action<Room> OnEnter, OnExit;
 
         private void Start()
         {
-            _roomObjects = GetComponentsInChildren<RoomObject>(true).ToList();
+            _roomObjects = GetComponentsInChildren<IRoomObject>(true).ToList();
             _orthoSize = Camera.main.orthographicSize;
         }
 
@@ -60,6 +60,19 @@ namespace Rooms
                     PlayerCamera = cam,
                     Room = this,
                 });
+            }
+        }
+
+        private void OnValidate()
+        {
+            if (_confiner != null) return;
+            try
+            {
+                _confiner = GetComponentInChildren<RoomConfiner>();
+            }
+            catch
+            {
+                Debug.LogWarning("No confiner for room: " + transform.name);
             }
         }
 

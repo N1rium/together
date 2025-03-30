@@ -31,7 +31,11 @@ namespace Networking
             
             vcam.enabled = IsOwner;
             _multiplayerManager = GameObject.Find("NetworkManager").GetComponent<MultiplayerManager>();
-            playerAnimator.GetComponent<AudioListener>().enabled = IsOwner;
+            
+            if (!IsOwner)
+            {
+                playerAnimator.GetComponent<AudioListener>().enabled = false;
+            }
             
             if (IsOwner)
             {
@@ -229,7 +233,7 @@ namespace Networking
         public event Action<bool> CrouchingChanged;
         public event Action<bool> DeathChanged;
 
-        public event Action Attacked;
+        public event Action<Vector2> Attacked;
 
         public GeneratedCharacterSize GeneratedCharacterSize()
         {

@@ -33,7 +33,7 @@ namespace TarodevController
         public event Action<bool> SwimmingChanged;
         public event Action<bool> CrouchingChanged;
         public event Action<bool> DeathChanged;
-        public event Action Attacked;
+        public event Action<Vector2> Attacked;
         public bool Active { get; private set; } = true;
         public Vector2 Up { get; private set; }
         public Vector2 Right { get; private set; }
@@ -875,7 +875,7 @@ namespace TarodevController
         public event Action<bool> SwimmingChanged;
         public event Action<bool> CrouchingChanged;
         public event Action<bool> DeathChanged;
-        public event Action Attacked;
+        public event Action<Vector2> Attacked;
         public GeneratedCharacterSize GeneratedCharacterSize();
     }
 

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40c741c532d5f814692a366b10e8342d, type: 3}
+  m_Name: SwordStats
+  m_EditorClassIdentifier: 
+  Name: Weapon Name
+  Description: Weapon Description
+  Cooldown: 0.5
+  BaseDamage: 1
+  Knockback: 1
+  AttackSound:
+    Sounds:
+    - {fileID: 8300000, guid: dd8e50f76ce84ad459a25fc4dec49f86, type: 3}
+    PitchRandomFactor: 0
+  AttackHitSound:
+    Sounds: []
+    PitchRandomFactor: 0

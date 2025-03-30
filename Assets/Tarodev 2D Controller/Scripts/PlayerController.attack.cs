@@ -5,8 +5,6 @@ namespace TarodevController
 {
     public partial class PlayerController
     {
-        [SerializeField] private GameObject _attackObj;
-        
         private bool _attackToConsume;
         private bool _canAttack = true;
         private float _attackCooldown = 0.5f;
@@ -17,15 +15,13 @@ namespace TarodevController
         {
             if (!CanAttack) return;
             _canAttack = false;
-            _attackObj.SetActive(true);
-            Attacked?.Invoke();
+            Attacked?.Invoke(_lastFrameDirection.normalized);
             Delay.For(_attackCooldown).OnComplete(ResetAttack);
         }
 
         private void ResetAttack()
         {
             _canAttack = true;
-            _attackObj.SetActive(false);
         }
     }
 }
