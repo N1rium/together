@@ -304,7 +304,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c89b8855ab650ac489f1f1b5f2a94751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackObj: {fileID: 0}
   _airborneCollider: {fileID: 1168141624914108346}
   <Stats>k__BackingField: {fileID: 11400000, guid: 08b2937a72e50db41bc64417d65ee605, type: 2}
   _drawGizmos: 1
@@ -744,7 +743,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1007083872188358457}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!1 &1032321221504231521
 GameObject:
   m_ObjectHideFlags: 0
@@ -6205,7 +6204,7 @@ GameObject:
   - component: {fileID: 1577155319085637493}
   - component: {fileID: 6321054777526310273}
   - component: {fileID: 6313151692023406384}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: ConfinerCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36411,9 +36410,9 @@ MonoBehaviour:
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
   TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 1, y: 1, z: 1}
+  Damping: {x: 0.1, y: 0.1, z: 0.1}
   Lookahead:
-    Enabled: 1
+    Enabled: 0
     Time: 0.333
     Smoothing: 10
     IgnoreY: 0
