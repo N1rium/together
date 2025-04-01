@@ -481,7 +481,7 @@ namespace TarodevController
 
             if (on)
             {
-                _constantForce.force = new(_frameDirection.x * 400f, _constantForce.force.y);
+                _constantForce.force = new(_lastFrameDirection.x * 400f, _constantForce.force.y);
                 _decayingTransientVelocity = Vector2.zero;
                 _bufferedJumpUsable = true;
                 _wallJumpCoyoteUsable = true;
