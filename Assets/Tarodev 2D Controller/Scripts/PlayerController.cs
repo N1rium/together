@@ -481,6 +481,7 @@ namespace TarodevController
 
             if (on)
             {
+                _constantForce.force = new(_frameDirection.x * 400f, _constantForce.force.y);
                 _decayingTransientVelocity = Vector2.zero;
                 _bufferedJumpUsable = true;
                 _wallJumpCoyoteUsable = true;
@@ -488,6 +489,7 @@ namespace TarodevController
             }
             else
             {
+                _constantForce.force = new(0f, _constantForce.force.y);
                 _timeLeftWall = _time;
                 _canGrabWallAfter = _time + WALL_REATTACH_COOLDOWN;
                 _rb.gravityScale = GRAVITY_SCALE;
@@ -615,7 +617,7 @@ namespace TarodevController
             {
                 /*float wallVelocity = _frameInput.Move.y * Stats.WallClimbSpeed;*/
                 float wallVelocity;
-                _constantForce.force = Vector2.zero;
+                _constantForce.force = new(_constantForce.force.x, 0f);
                 if (IsGrabbingWall)
                 {
                     _rb.gravityScale = 0f;
@@ -658,8 +660,8 @@ namespace TarodevController
 
                 return;
             }
-
-            var extraForce = new Vector2(0, _grounded ? 0 : -Stats.ExtraConstantGravity * (_endedJumpEarly && Velocity.y > 0 ? Stats.EndJumpEarlyExtraForceMultiplier : 1));
+            
+            var extraForce = new Vector2(_constantForce.force.x, _grounded ? 0 : -Stats.ExtraConstantGravity * (_endedJumpEarly && Velocity.y > 0 ? Stats.EndJumpEarlyExtraForceMultiplier : 1));
             _constantForce.force = extraForce * _rb.mass;
 
             var targetSpeed = _hasInputThisFrame ? Stats.BaseSpeed : 0;
