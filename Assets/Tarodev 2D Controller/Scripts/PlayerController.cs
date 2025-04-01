@@ -481,7 +481,7 @@ namespace TarodevController
 
             if (on)
             {
-                _constantForce.force = new(_lastFrameDirection.x * 400f, _constantForce.force.y);
+                /*_constantForce.force = new(_lastFrameDirection.x * 400f, _constantForce.force.y);*/
                 _decayingTransientVelocity = Vector2.zero;
                 _bufferedJumpUsable = true;
                 _wallJumpCoyoteUsable = true;
@@ -489,7 +489,7 @@ namespace TarodevController
             }
             else
             {
-                _constantForce.force = new(0f, _constantForce.force.y);
+                /*_constantForce.force = new(0f, _constantForce.force.y);*/
                 _timeLeftWall = _time;
                 _canGrabWallAfter = _time + WALL_REATTACH_COOLDOWN;
                 _rb.gravityScale = GRAVITY_SCALE;
@@ -540,7 +540,6 @@ namespace TarodevController
                 }
             } 
             // TODO - Try to get wall grabbing to work with movables
-            /*
             else if (IsGrabbingWall)
             {
                 if (_wallHit.transform.TryGetComponent(out currentPlatform))
@@ -548,7 +547,6 @@ namespace TarodevController
                     _activatedMovers.Add(currentPlatform);
                 }
             }
-            */
             
 
             if (_lastPlatform != currentPlatform)
@@ -568,8 +566,7 @@ namespace TarodevController
             foreach (var platform in _activatedMovers)
             {
                 // Don't apply if we're next to it
-                if (_framePosition.y < platform.FramePosition.y - SKIN_WIDTH) continue;
-
+                /*if (_framePosition.y < platform.FramePosition.y - SKIN_WIDTH) continue;*/
                 _frameTransientVelocity += platform.FramePositionDelta / _delta;
             }
         }
@@ -623,7 +620,9 @@ namespace TarodevController
                     _rb.gravityScale = 0f;
                     /*wallVelocity = Mathf.MoveTowards(Velocity.y, _frameInput.Move.y * Stats.WallClimbSpeed,
                         Stats.WallFallAcceleration * _delta);*/
-                    SetVelocity(new Vector2(0f, _frameInput.Move.y * Stats.WallClimbSpeed));
+                    var curr = new Vector2(0f, _frameInput.Move.y * Stats.WallClimbSpeed);
+                    curr += AdditionalFrameVelocities() * _currentFrameSpeedModifier;
+                    SetVelocity(curr);
                     return;
                 }
                 
@@ -661,7 +660,7 @@ namespace TarodevController
                 return;
             }
             
-            var extraForce = new Vector2(_constantForce.force.x, _grounded ? 0 : -Stats.ExtraConstantGravity * (_endedJumpEarly && Velocity.y > 0 ? Stats.EndJumpEarlyExtraForceMultiplier : 1));
+            var extraForce = new Vector2(0, _grounded ? 0 : -Stats.ExtraConstantGravity * (_endedJumpEarly && Velocity.y > 0 ? Stats.EndJumpEarlyExtraForceMultiplier : 1));
             _constantForce.force = extraForce * _rb.mass;
 
             var targetSpeed = _hasInputThisFrame ? Stats.BaseSpeed : 0;
