@@ -10,6 +10,7 @@ namespace Weapon
     {
         [SerializeField] private float damageTTL = 0.15f;
         [SerializeField] private float TTL = 0.5f;
+        [SerializeField] private float DetachTTL = 0.075f;
 
         [SerializeField] private GameObject hitEffect;
         [SerializeField] private AudioClip hitSoundEffect;
@@ -27,6 +28,7 @@ namespace Weapon
         private void Start()
         {
             _collider = GetComponent<Collider2D>();
+            Delay.For(DetachTTL).OnComplete(() => transform.parent = null);
             Delay.For(damageTTL).OnComplete(Deactivate);
             Delay.For(TTL).OnComplete(Kill);
         }

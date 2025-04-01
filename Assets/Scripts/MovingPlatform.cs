@@ -4,17 +4,41 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    private Vector3 startPos;
-    private void Start()
+    private Vector3 _lastPosition;
+    private Vector3 _currentVelocity;
+
+    void Start()
     {
-        startPos = transform.position;
+        _lastPosition = transform.position;
     }
 
-    public void Update()
+    private void Update()
     {
-        if (NetworkManager.Singleton == null) return;
-        // Move up and down by 5 meters and change direction every 3 seconds.
-        var positionY = Mathf.PingPong(NetworkManager.Singleton.LocalTime.TimeAsFloat / 3f, 1f) * 5f;
-        transform.position = startPos + new Vector3(0, positionY, 0);
+        transform.position += Vector3.right * (1f * Time.deltaTime);
+        /*_currentVelocity = (transform.position - _lastPosition);
+        _lastPosition = transform.position;*/
     }
+
+    void FixedUpdate()
+    {
+        // Calculate how much the platform moved this frame
+        _currentVelocity = (transform.position - _lastPosition);
+        _lastPosition = transform.position;
+    }
+
+    // Called when another object stays on the platform
+    /*void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Rigidbody playerRb = collision.gameObject.GetComponent<Rigidbody>();
+            if (playerRb != null)
+            {
+                // Move the player with the platform's velocity
+                playerRb.velocity += _currentVelocity;
+            }
+        }
+    }*/
+
+    public Vector3 GetVelocity() => _currentVelocity;
 }

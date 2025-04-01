@@ -113,7 +113,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 1
+  moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
   randomSeed: 0
@@ -4900,6 +4900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageTTL: 0.15
   TTL: 0.5
+  DetachTTL: 0.05
   hitEffect: {fileID: 7762681672195827560, guid: 024bc95f4f4dcbb4b85c42602189e2e2, type: 3}
   hitSoundEffect: {fileID: 8300000, guid: 5295aa2a901b31b408128047235fb3b1, type: 3}
 --- !u!82 &3706201398679438429
@@ -5105,7 +5106,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 1
+  moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
   randomSeed: 0
@@ -19814,7 +19815,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 1
+  moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
   randomSeed: 0

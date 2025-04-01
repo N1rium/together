@@ -45,7 +45,7 @@ namespace Weapon
 
         private void Use(Vector2 dir)
         {
-            var go = Instantiate(projectile);
+            var go = Instantiate(projectile, transform);
             var t = go.transform;
 
             PlaySound();
