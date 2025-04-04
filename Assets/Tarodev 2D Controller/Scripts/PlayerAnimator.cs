@@ -237,7 +237,7 @@ namespace TarodevController
 
         private void HandleWallSlideEffects()
         {
-            var slidingThisFrame = _isOnWall && !_grounded && _player.Velocity.y < 0;
+            var slidingThisFrame = _isOnWall && !_grounded && _player.Velocity.y < 0 && _player.Input.y != 0;
 
             if (!_isSliding && slidingThisFrame)
             {
@@ -257,7 +257,7 @@ namespace TarodevController
             var point = requiredAudio ? Mathf.InverseLerp(0, -_player.Stats.LadderSlideSpeed, _player.Velocity.y) : 0;
             _wallSlideSource.volume = Mathf.SmoothDamp(_wallSlideSource.volume, Mathf.Lerp(0, _maxWallSlideVolume, point), ref _slideAudioVel, 0.2f);
 
-            if ((_player.ClimbingLadder || _isOnWall) && _player.Velocity.y > 0)
+            if ((_player.ClimbingLadder || _isOnWall) && _player.Velocity.y > 0 && _player.Input.y != 0)
             {
                 if (!_ascendingLadder)
                 {
