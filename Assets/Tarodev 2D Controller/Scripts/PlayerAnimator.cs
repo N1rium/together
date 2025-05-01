@@ -266,6 +266,7 @@ namespace TarodevController
                     Play();
                 }
 
+                // TODO - Look into this. This causes more sounds when travelling and climinb on a moving platform
                 if (transform.position.y >= _lastClimbSoundY + _distancePerClimbSound)
                 {
                     _lastClimbSoundY = transform.position.y;
