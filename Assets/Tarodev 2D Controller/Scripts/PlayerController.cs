@@ -516,6 +516,7 @@ namespace TarodevController
         private Vector2 _frameSpeedModifier, _currentFrameSpeedModifier = Vector2.one;
         private const float SLOPE_ANGLE_FOR_EXACT_MOVEMENT = 0.7f;
         private IPhysicsMover _lastPlatform;
+        private IPhysicsMover _platform;
         private float _lastFrameY;
 
         private void TraceGround()
@@ -536,7 +537,8 @@ namespace TarodevController
 
                 if (_groundHit.transform.TryGetComponent(out currentPlatform))
                 {
-                    _activatedMovers.Add(currentPlatform);
+                    _platform = currentPlatform;
+                    /*_activatedMovers.Add(currentPlatform);*/
                 }
             } 
             // TODO - Try to get wall grabbing to work with movables
@@ -544,8 +546,14 @@ namespace TarodevController
             {
                 if (_wallHit.transform.TryGetComponent(out currentPlatform))
                 {
-                    _activatedMovers.Add(currentPlatform);
+                    _platform = currentPlatform;
+                    AddMover(currentPlatform);
+                    /*_activatedMovers.Add(currentPlatform);*/
                 }
+            }
+            else
+            {
+                _platform = null;
             }
             
 
@@ -567,8 +575,19 @@ namespace TarodevController
             {
                 // Don't apply if we're next to it
                 /*if (_framePosition.y < platform.FramePosition.y - SKIN_WIDTH) continue;*/
-                _frameTransientVelocity += platform.FramePositionDelta / _delta;
+                /*_frameTransientVelocity += platform.FramePositionDelta / _delta;*/
             }
+
+            if (_platform != null)
+            {
+                _frameTransientVelocity += _platform.FramePositionDelta / _delta;
+            }
+        }
+
+        private void AddMover(IPhysicsMover mover)
+        {
+            if (_activatedMovers.Count > 0) return;
+            _activatedMovers.Add(mover);
         }
 
         private void ApplyMoverExitVelocity(IPhysicsMover mover)
