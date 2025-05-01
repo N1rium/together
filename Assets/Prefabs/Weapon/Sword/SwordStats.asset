@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Weapon Name
   Description: Weapon Description
-  Cooldown: 0.5
+  Cooldown: 0.25
   BaseDamage: 1
   Knockback: 1
   AttackSound:
